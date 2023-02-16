@@ -14,9 +14,9 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 // Id-variabler til registrering av brukere
-var username = document.querySelector("#inp-username");
-var m_ID = document.querySelector("#inp-M-ID");
-var pin = document.querySelector("#inp-pin");
+var username = document.querySelector("#name-f2b3");
+var pin = document.querySelector("#text-7e86");
+var m_ID = document.querySelector("#text-5fcd");
 
 // Id-variabler til registrering av ny tid
 var t_username = document.querySelector("#t-username");
@@ -43,7 +43,7 @@ function Register_Meeting_Time() {
 
         var dateString = year + '-' + month + '-' + day;
         usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time.value)});
-        
+
         console.log('The username and pin is correct.');
       } else {
         console.log('The username or pin is incorrect!');
