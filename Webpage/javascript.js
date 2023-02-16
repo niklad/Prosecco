@@ -42,7 +42,7 @@ function Register_Meeting_Time() {
       if (user['name'] === t_username.value && user['pin'] == t_pin.value) {
 
         var dateString = year + '-' + month + '-' + day;
-        usersRef.child(userSnapshot['key'] + '/meeting_times').set({[dateString]:String(t_time.value)});
+        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time.value)});
         
         console.log('The username and pin is correct.');
       } else {
