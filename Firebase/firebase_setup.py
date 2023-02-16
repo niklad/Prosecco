@@ -15,4 +15,6 @@ firebase_admin.initialize_app(
     },
 )
 
-read_rfid()
+
+if __name__ == "__main__":
+    read_rfid()
