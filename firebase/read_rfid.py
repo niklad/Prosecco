@@ -42,4 +42,4 @@ def read_rfid():
 
 
 if __name__ == "__main__":
-    pass
+    read_rfid()
