@@ -11,6 +11,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+
 def check_if_late(id: str, arrival_time: str, departure_time: str):
     # Return if the departure time is registred
     if departure_time is not None:
