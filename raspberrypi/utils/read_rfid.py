@@ -16,16 +16,6 @@ def read_rfid(firebase: pyrebase):
     current_time = now.strftime("%H:%M:%S")
     current_date = now.strftime("%Y-%m-%d")
 
-    # Set up Pyrebase
-    # config = {
-    #     "apiKey": "YOUR_API_KEY",
-    #     "authDomain": "YOUR_AUTH_DOMAIN",
-    #     "databaseURL": "YOUR_DATABASE_URL",
-    #     "storageBucket": "YOUR_STORAGE_BUCKET",
-    #     "serviceAccount": "utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
-    # }
-    # firebase = pyrebase.initialize_app(config)
-
     # Get arrival and departure times
     arrival_time = (
         firebase.database()
