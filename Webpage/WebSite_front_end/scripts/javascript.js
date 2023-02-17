@@ -14,33 +14,36 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 // Id-variabler til registrering av brukere
-var username = document.querySelector("#name-3b9a");
-var pin = document.querySelector("#email-3b9a");
-var m_ID = document.querySelector("#text-14ad");
+var username = document.querySelector("#r_u");
+var pin = document.querySelector("#r_p");
+var m_ID = document.querySelector("#r_id");
 
 // Id-variabler til registrering av ny tid
-var t_username = document.querySelector("#name-3b9a");
-var t_pin = document.querySelector("#email-3b9a");
-var t_time = document.querySelector("#text-14ad");
+var t_username = document.querySelector("#mt_u");
+var t_pin = document.querySelector("#mt_p");
+var t_time = document.querySelector("#mt_t");
 
 // Id-variabler til registrering av ny standardtid
-var st_username = document.querySelector("#name-3b9a");
-var st_pin = document.querySelector("#email-3b9a");
-var st_time = document.querySelector("#text-14ad");
+var st_username = document.querySelector("#st_u");
+var st_pin = document.querySelector("#st_p");
+var st_time = document.querySelector("#st_t");
 
 // Register ny møtetid
 function Register_Standard_Time() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
 
+  st_username_value = st_username.value;
+  st_pin_value = st_pin.value;
+  st_time_value = st_time.value;
+
   usersRef.once('value', function(snapshot) {
     snapshot.forEach(function(userSnapshot) {
       console.log(userSnapshot['key']);
       var user = userSnapshot.val();
-      if (user['name'] === st_username.value && user['pin'] == st_pin.value) {
 
-        usersRef.child(userSnapshot['key']).update({'standard_time':String(st_time.value)});
-        
+      if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
+        usersRef.child(userSnapshot['key']).update({'standard_time':String(st_time_value)});
         console.log('The username and pin is correct.');
       } else {
         console.log('The username or pin is incorrect!');
@@ -53,6 +56,10 @@ function Register_Standard_Time() {
 function Register_Meeting_Time() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
+
+  t_username_value = t_username.value;
+  t_pin_value = t_pin.value;
+  t_time_value = t_time.value;
 
   var currentDate = new Date();
   var tomorrow = new Date();
@@ -71,10 +78,10 @@ function Register_Meeting_Time() {
     snapshot.forEach(function(userSnapshot) {
       console.log(userSnapshot['key']);
       var user = userSnapshot.val();
-      if (user['name'] === t_username.value && user['pin'] == t_pin.value) {
+      if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
 
         var dateString = year + '-' + month + '-' + day;
-        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time.value)});
+        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time_value)});
 
         console.log('The username and pin is correct.');
       } else {
@@ -90,13 +97,17 @@ function Register_User() {
   var usersRef = database.ref('Users');
   var mIDRef = usersRef.child('ID:' + m_ID.value);
 
+  r_username_value = username.value;
+  r_pin_value = pin.value;
+  m_ID_value = m_ID.value;
+
   mIDRef.once('value', function(snapshot) {
     if (snapshot.exists()) {
       alert("Your ID has already been registered!");
     } else {
       alert("Your ID has been registered!");
-      var new_user_ref = usersRef.child('ID:' + m_ID.value);
-      new_user_ref.set({'name':username.value, 'pin':pin.value, 'prosecco_marks':0, 'standard_time':'09:15'});
+      var new_user_ref = usersRef.child('ID:' + m_ID_value);
+      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':'09:15'});
     }
   });
 }
