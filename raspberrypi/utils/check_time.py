@@ -2,6 +2,7 @@ from firebase_admin import db
 from datetime import datetime, timedelta
 
 
+
 def check_if_late(id: str, arrival_time: str, departure_time: str):
     # Return if the departure time is registred
     if departure_time is not None:
