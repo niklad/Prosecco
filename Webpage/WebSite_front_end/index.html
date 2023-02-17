@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Work in progress">
     <meta name="description" content="">
-    <title>Home</title>
+    <title>Hjem</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
 <link rel="stylesheet" href="Home.css" media="screen">
     <script class="u-script" type="text/javascript" src="scripts/jquery-1.9.1.min.js" defer=""></script>
@@ -32,7 +32,7 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-            <ul class="u-custom-font u-heading-font u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="index.html" style="padding: 10px 42px;">Home</a>
+            <ul class="u-custom-font u-heading-font u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="index.html" style="padding: 10px 42px;">Hjem</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="meeting_time_tomorrow.html" style="padding: 10px 42px;">Møtetid i morgen</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="standard_meeting_time.html" style="padding: 10px 42px;">Standard møtetid</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="memes.html" style="padding: 10px 42px;">Memes</a>
@@ -56,7 +56,12 @@
         </nav>
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-1861">
-      <div class="u-clearfix u-sheet u-sheet-1"></div>
+      <!-- <div class="u-clearfix u-sheet u-sheet-1"></div> -->
+      <div>
+        <!-- <button type="button" id="add_new_row" onclick="add_Row()">Add row</button> -->
+        <table border="1" width = "400" height = "100" id="status">
+       </table>
+      </div>
     </section>
     
     
@@ -74,5 +79,9 @@
         <span>Website Builder Software</span>
       </a>. 
     </section> -->
-  
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>
+    <script class="u-script" type="text/javascript" src="scripts/javascript.js" defer=""></script>
 </body></html>

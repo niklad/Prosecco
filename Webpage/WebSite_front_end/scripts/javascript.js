@@ -13,6 +13,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+const dbRefObject = firebase.database().ref('Users')
+
 // Id-variabler til registrering av brukere
 var username = document.querySelector("#r_u");
 var pin = document.querySelector("#r_p");
@@ -111,3 +113,167 @@ function Register_User() {
     }
   });
 }
+
+dbRefObject.on('value', function(snapshot) {
+
+  reset_tab();
+  tab_info = [];
+
+  snapshot.forEach(function(userSnapshot) {
+    console.log(userSnapshot['key']);
+    var key = userSnapshot['key'];
+    var user = userSnapshot.val();
+
+    var date = Get_Date_Str();
+    var date_tomorrow = Get_Date_Tomorrow_Str();
+    var school_status;
+    var todays_meeting_time;
+    var tomorrow_meeting_time;
+
+    console.log(date);
+    // console.log(Get_Date_Tomorrow_Str());
+    // console.log(user[])
+
+
+    if (user['meeting_times']) {
+      if (user['meeting_times'][date]) {
+        todays_meeting_time = user['meeting_times'][date];
+      } else {
+        todays_meeting_time = user['standard_time'];
+      }
+      if (user['meeting_times'][date_tomorrow]) {
+        tomorrow_meeting_time = user['meeting_times'][date_tomorrow];
+      }
+    } else {
+      todays_meeting_time = user['standard_time'];
+      tomorrow_meeting_time = user['standard_time'];
+    }
+
+    if(user['arrival_times']) {
+      if (user['arrival_times'][date]) {
+        // console.log(user['arrival_times'][date]);
+        if (user['departure_times']) {
+          if (user['departure_times'][date]) {
+            school_status = 'Ikke på skolen';
+          }
+        } else {
+          school_status = 'På skolen';
+        }
+        if (user['arrival_times'][date] > todays_meeting_time) {
+          school_status = school_status + ' og fikk strek';
+        }
+      } 
+    } else {
+      school_status = 'Ikke på skolen';
+    }
+
+    
+
+    data = {
+      'name': user['name'],
+      'prosecco_marks': user['prosecco_marks'],
+      'meeting_time': todays_meeting_time,
+      'tomorrow_meeting_time': tomorrow_meeting_time,
+      'status': school_status
+    };
+
+    tab_info.push(data);
+  });
+
+
+  tab_info.sort(function(a, b){
+    return a.prosecco_marks-b.prosecco_marks
+  })
+
+  tab_info.reverse();
+  console.log(tab_info);
+
+  for (let i = 0; i < tab_info.length; i++) {
+
+    var tableRow = document.getElementById("status");
+
+    var row = tableRow.insertRow(-1);
+    var name_cell1 = row.insertCell(0);
+    var p_mark_cell = row.insertCell(1);
+    var meeting_time_cell = row.insertCell(2);
+    var tomorrow_meeting_time_cell = row.insertCell(3);
+    var status_cell = row.insertCell(4);
+
+    name_cell1.innerHTML = tab_info[i]['name'];
+    p_mark_cell.innerHTML = tab_info[i]['prosecco_marks'];
+    meeting_time_cell.innerHTML = tab_info[i]['meeting_time'];
+    tomorrow_meeting_time_cell.innerHTML = tab_info[i]['tomorrow_meeting_time'];
+    status_cell.innerHTML = tab_info[i]['status'];
+
+  }
+});
+
+function reset_tab() {
+  var tableRow = document.getElementById("status");
+
+  
+  tableRow.innerHTML = ""
+
+  var header = tableRow.createTHead();
+
+  var row = header.insertRow(-1);
+  var name_cell1 = row.insertCell(0);
+  var p_mark_cell = row.insertCell(1);
+  var meeting_time_cell = row.insertCell(2);
+  var tomorrow_meeting_time_cell = row.insertCell(3);
+  var status_cell = row.insertCell(4);
+  name_cell1.innerHTML = "<th><b>Navn</b></th>";
+  p_mark_cell.innerHTML = "<th><b>Antall streker</b></th>";
+  meeting_time_cell.innerHTML = "<th><b>Dagens møtetid</b></th>";
+  tomorrow_meeting_time_cell.innerHTML = "<th><b>Morgendagens møtetid</b></th>";
+  status_cell.innerHTML = "<th><b>Status</b></th>";
+}
+
+function Get_Date_Str() {
+  var currentDate = new Date();
+
+  var year = currentDate.getFullYear();
+  var month = currentDate.getMonth() + 1; // months are 0-indexed, so we add 1 to get the correct month
+  var day = currentDate.getDate();
+  if (String(day).length == 1) {
+    day = '0' + day;
+  }
+  if (String(month).length == 1) {
+    month = '0' + month;
+  }
+
+  var DateString = year + '-' + month + '-' + day;
+
+  return DateString;
+}
+
+function Get_Date_Tomorrow_Str() {
+  var currentDate = new Date();
+  var tomorrow = new Date();
+  tomorrow.setDate(currentDate.getDate() + 1);
+
+  var year = tomorrow.getFullYear();
+  var month = tomorrow.getMonth() + 1; // months are 0-indexed, so we add 1 to get the correct month
+  var day = tomorrow.getDate();
+  if (String(day).length == 1) {
+    day = '0' + day;
+  }
+  if (String(month).length == 1) {
+    month = '0' + month;
+  }
+
+  var TomorrowDateString = year + '-' + month + '-' + day;
+
+  return TomorrowDateString;
+}
+
+
+
+// var now = new Date();
+
+// now.on('value', function(snapshot){
+//   var now_hours = now.getHours();
+//   var now_minutes = now.getMinutes();
+
+//   console.log(now_hours + ':' + now_minutes)
+// });
