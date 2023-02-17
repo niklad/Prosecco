@@ -22,7 +22,7 @@ def read_rfid():
         "authDomain": "YOUR_AUTH_DOMAIN",
         "databaseURL": "YOUR_DATABASE_URL",
         "storageBucket": "YOUR_STORAGE_BUCKET",
-        "serviceAccount": "raspberrypi/utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
+        "serviceAccount": "utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
     }
     firebase = pyrebase.initialize_app(config)
 
