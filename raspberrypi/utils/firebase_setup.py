@@ -6,7 +6,7 @@ from firebase_admin import db
 def firebase_setup():
     # Fetch the service account key JSON file contents
     cred = credentials.Certificate(
-        "firebase/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
+        "raspberrypi/utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
     )
     # Initialize the app with a service account, granting admin privileges
     firebase_admin.initialize_app(

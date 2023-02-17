@@ -1,7 +1,8 @@
-from firebase.firebase_setup import firebase_setup
-from firebase.read_rfid import read_rfid
-from firebase.check_time import check_if_late
-from firebase.joker_prosecco import give_random_processo
+from utils.firebase_setup import firebase_setup
+from utils.read_rfid import read_rfid
+from utils.check_time import check_if_late
+from utils.joker_prosecco import give_random_processo
+
 
 def main():
     firebase_setup()
@@ -13,6 +14,7 @@ def main():
             continue
         check_if_late(id, arrival_time, departure_time)
         give_random_processo()
+
 
 if __name__ == "__main__":
     main()
