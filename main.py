@@ -7,7 +7,10 @@ def main():
     firebase_setup()
 
     while True:
-        id, arrival_time, departure_time = read_rfid()
+        try:
+            id, arrival_time, departure_time = read_rfid()
+        except TypeError:
+            continue
         check_if_late(id, arrival_time, departure_time)
 
 

@@ -7,29 +7,28 @@ def read_rfid():
     print()
     id = input("Enter ID: ")
 
+    # Check if ID is ten numbers
+    if len(id) != 10 or not id.isdigit():
+        print("ID must be ten digits.")
+        return
+
     print()
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.strftime("%Y-%m-%d")
 
-    arrival_time = db.reference(
-        f"/Users/ID:{id}/arrival_times/{current_date}"
-    ).get()
+    arrival_time = db.reference(f"/Users/ID:{id}/arrival_times/{current_date}").get()
     departure_time = db.reference(
         f"/Users/ID:{id}/departure_times/{current_date}"
     ).get()
 
     if arrival_time is None:
-        db.reference(f"/Users/ID:{id}/arrival_times/{current_date}").set(
-            current_time
-        )
+        db.reference(f"/Users/ID:{id}/arrival_times/{current_date}").set(current_time)
         arrival_time = current_time
         print(f"Arrival time set to {current_time}.")
 
     elif departure_time is None:
-        db.reference(f"/Users/ID:{id}/departure_times/{current_date}").set(
-            current_time
-        )
+        db.reference(f"/Users/ID:{id}/departure_times/{current_date}").set(current_time)
         departure_time = current_time
         print(f"Departure time set to {current_time}.")
 
