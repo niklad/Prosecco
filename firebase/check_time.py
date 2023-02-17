@@ -23,7 +23,7 @@ def check_if_late(id: str, arrival_time: str, departure_time: str):
     arrival_time_seconds = str(arrival_time).split(":")[2]
     meeting_time_hours = str(meeting_time).split(":")[0]
     meeting_time_minutes = str(meeting_time).split(":")[1]
-    meeting_time_seconds = "59"
+    meeting_time_seconds = "59"  # To allow for arriving within the minute
 
     if arrival_time_hours < meeting_time_hours:
         print("You are on time!")
@@ -37,11 +37,15 @@ def check_if_late(id: str, arrival_time: str, departure_time: str):
                 print("You are on time!")
                 return
     print("You are late!")
+    increment_prosecco(id)
+    return
+
+
+def increment_prosecco(id: str):
     # Increment the prosecco_mark variable in the database
     db.reference(f"/Users/ID:{id}/prosecco_marks").set(
         db.reference(f"/Users/ID:{id}/prosecco_marks").get() + 1
     )
-    return
 
 
 if __name__ == "__main__":
