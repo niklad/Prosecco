@@ -18,7 +18,9 @@ def check_if_late(id: str, arrival_time: str, departure_time: str):
     if is_late(arrival_time, meeting_time):
         print("You are late!")
         increment_prosecco(id)
+        return
 
+    print("You are on time!")
     return
 
 
@@ -36,26 +38,12 @@ def get_meeting_time(id: str):
 
 
 def is_late(arrival_time: str, meeting_time: str):
-    """Check if the arrival time is later than the meeting time."""
-    arrival_time_hours = str(arrival_time).split(":")[0]
-    arrival_time_minutes = str(arrival_time).split(":")[1]
-    arrival_time_seconds = str(arrival_time).split(":")[2]
-    meeting_time_hours = str(meeting_time).split(":")[0]
-    meeting_time_minutes = str(meeting_time).split(":")[1]
-    meeting_time_seconds = str(meeting_time).split(":")[2]
-
-    if arrival_time_hours < meeting_time_hours:
-        print("You are on time!")
-        return False
-    if arrival_time_hours == meeting_time_hours:
-        if arrival_time_minutes < meeting_time_minutes:
-            print("You are on time!")
-            return False
-        if arrival_time_minutes == meeting_time_minutes:
-            if arrival_time_seconds <= meeting_time_seconds:
-                print("You are on time!")
-                return False
-    return True
+    """Check if the arrival time (HH:MM:SS) is later than the meeting time."""
+    if datetime.strptime(arrival_time, "%H:%M:%S") > datetime.strptime(
+        meeting_time, "%H:%M:%S"
+    ):
+        return True
+    return False
 
 
 def is_safing(arrival_time: str, meeting_time: str):
