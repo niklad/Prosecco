@@ -1,20 +1,17 @@
-import firebase_admin
-from firebase_admin import credentials
+import pyrebase
 
 
 def firebase_setup():
-    # Fetch the service account key JSON file contents
-    cred = credentials.Certificate(
-        "raspberrypi/utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json"
-    )
-    # Initialize the app with a service account, granting admin privileges
-    firebase_admin.initialize_app(
-        cred,
-        {
-            "databaseURL": "https://nettsidev1-76f5e.firebaseio.com"
-        },
-    )
+    config = {
+        "apiKey": "AIzaSyC1VHPwn62vcyx_THa8COonJfY1lWEi-l0",
+        "authDomain": "nettsidev1-76f5e.firebaseapp.com",
+        "databaseURL": "https://nettsidev1-76f5e.firebaseio.com",
+        "storageBucket": "nettsidev1-76f5e.appspot.com",
+        "serviceAccount": "utils/nettsidev1-76f5e-firebase-adminsdk-w8ekw-d84ea01cad.json",
+    }
+    firebase = pyrebase.initialize_app(config)
+    return firebase
 
 
 if __name__ == "__main__":
-    firebase_setup()
+    raise Exception("This file should not be run directly.")

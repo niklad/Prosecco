@@ -1,37 +1,47 @@
-from firebase_admin import db
+import pyrebase
 from datetime import datetime, timedelta
 
 
-def check_if_late(id: str, arrival_time: str, departure_time: str):
+def check_if_late(id: str, arrival_time: str, departure_time: str, firebase: pyrebase):
     # Return if the departure time is registred
+    db = firebase.database()
     if departure_time is not None:
         return
 
     # Check if there is a meeting time set for today
-    meeting_time = get_meeting_time(id)
+    meeting_time = get_meeting_time(id, db)
 
     if is_safing(arrival_time, meeting_time):
         print("You are safing!")
-        increment_prosecco(id)
+        increment_prosecco(id, db)
         return
 
     if is_late(arrival_time, meeting_time):
         print("You are late!")
-        increment_prosecco(id)
+        increment_prosecco(id, db)
         return
 
     print("You are on time!")
     return
 
 
-def get_meeting_time(id: str):
+def get_meeting_time(id: str, db: pyrebase):
     today = datetime.today()
     current_date = today.strftime("%Y-%m-%d")
 
-    meeting_time = db.reference(f"/Users/ID:{id}/meeting_times/{current_date}").get()
+    meeting_time = (
+        db.child("Users")
+        .child(f"ID:{id}")
+        .child("meeting_times")
+        .child(current_date)
+        .get()
+        .val()
+    )
     if meeting_time is None:
         # Get the standard_time varibale from the database
-        meeting_time = db.reference(f"/Users/ID:{id}/standard_time").get()
+        meeting_time = (
+            db.child("Users").child(f"ID:{id}").child("standard_time").get().val()
+        )
     meeting_time_seconds = "59"  # To allow for arriving within the minute
     meeting_time = f"{meeting_time}:{meeting_time_seconds}"
     return meeting_time
@@ -56,11 +66,14 @@ def is_safing(arrival_time: str, meeting_time: str):
     return False
 
 
-def increment_prosecco(id: str):
+def increment_prosecco(id: str, db: pyrebase):
     # Increment the prosecco_mark variable in the database
-    db.reference(f"/Users/ID:{id}/prosecco_marks").set(
-        db.reference(f"/Users/ID:{id}/prosecco_marks").get() + 1
+    prosecco_marks = (
+        db.child("Users").child(f"ID:{id}").child("prosecco_marks").get().val()
     )
+    prosecco_marks += 1
+    db.child("Users").child(f"ID:{id}").child("prosecco_marks").set(prosecco_marks)
+    return
 
 
 if __name__ == "__main__":

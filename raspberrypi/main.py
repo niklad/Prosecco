@@ -5,15 +5,15 @@ from utils.joker_prosecco import give_random_processo
 
 
 def main():
-    firebase_setup()
+    firebase = firebase_setup()
 
     while True:
         try:
-            id, arrival_time, departure_time = read_rfid()
+            id, arrival_time, departure_time = read_rfid(firebase)
         except TypeError:
             continue
-        check_if_late(id, arrival_time, departure_time)
-        give_random_processo()
+        check_if_late(id, arrival_time, departure_time, firebase)
+        give_random_processo(firebase)
 
 
 if __name__ == "__main__":
