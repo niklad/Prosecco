@@ -68,9 +68,12 @@ def is_safing(arrival_time: str, meeting_time: str):
 
 def increment_prosecco(id: str, db: pyrebase):
     # Increment the prosecco_mark variable in the database
-    db.child("Users").child(f"ID:{id}").child("prosecco_marks").set(
-        int(db.child("Users").child(f"ID:{id}").child("prosecco_marks").get().val()) + 1
+    prosecco_mark = (
+        db.child("Users").child(f"ID:{id}").child("prosecco_mark").get().val()
     )
+    prosecco_mark += 1
+    db.child("Users").child(f"ID:{id}").child("prosecco_mark").set(prosecco_mark)
+    return
 
 
 if __name__ == "__main__":
