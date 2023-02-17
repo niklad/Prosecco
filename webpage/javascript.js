@@ -23,6 +23,32 @@ var t_username = document.querySelector("#t-username");
 var t_pin = document.querySelector("#t-pin");
 var t_time = document.querySelector("#t-time");
 
+// Id-variabler til registrering av ny standardtid
+var st_username = document.querySelector("#st-username");
+var st_pin = document.querySelector("#st-pin");
+var st_time = document.querySelector("#st-time");
+
+// Register ny møtetid
+function Register_Standard_Time() {
+  var database = firebase.database();
+  var usersRef = database.ref('Users');
+
+  usersRef.once('value', function(snapshot) {
+    snapshot.forEach(function(userSnapshot) {
+      console.log(userSnapshot['key']);
+      var user = userSnapshot.val();
+      if (user['name'] === st_username.value && user['pin'] == st_pin.value) {
+
+        usersRef.child(userSnapshot['key']).update({'standard_time':String(st_time.value)});
+        
+        console.log('The username and pin is correct.');
+      } else {
+        console.log('The username or pin is incorrect!');
+      }
+    });
+  });
+}
+
 // Register ny møtetid
 function Register_Meeting_Time() {
   var database = firebase.database();
@@ -64,7 +90,7 @@ function Register_User() {
     } else {
       alert("Your ID has been registered!");
       var new_user_ref = usersRef.child('ID:' + m_ID.value);
-      new_user_ref.set({'name':username.value, 'pin':pin.value, 'prosecco_marks':0, 'meeting_time_tomorrow':'09:15'});
+      new_user_ref.set({'name':username.value, 'pin':pin.value, 'prosecco_marks':0, 'standard_time':'09:15'});
     }
   });
 }

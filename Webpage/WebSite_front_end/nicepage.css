@@ -40561,7 +40561,8 @@ a.u-link.u-text-hover-grey-90:hover {
 
 /*end-variables sitestylecss*/
  .u-header {
-  background-image: none;
+  background-image: url("images/default-image.jpg");
+  background-position: 50% 50%;
 }
 
 .u-header .u-sheet-1 {
@@ -40573,6 +40574,7 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-nav-1 {
+  font-weight: 700;
   font-size: 1rem;
 }
 
