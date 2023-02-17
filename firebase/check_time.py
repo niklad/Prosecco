@@ -23,7 +23,7 @@ def check_if_late(id: str, arrival_time: str, departure_time: str):
     arrival_time_seconds = str(arrival_time).split(":")[2]
     meeting_time_hours = str(meeting_time).split(":")[0]
     meeting_time_minutes = str(meeting_time).split(":")[1]
-    meeting_time_seconds = "00"
+    meeting_time_seconds = "59"
 
     if arrival_time_hours < meeting_time_hours:
         print("You are on time!")
