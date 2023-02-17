@@ -44,4 +44,4 @@ def read_rfid():
 
 
 if __name__ == "__main__":
-    read_rfid()
+    raise Exception("This file should not be run directly.")

@@ -76,4 +76,4 @@ def increment_prosecco(id: str):
 
 
 if __name__ == "__main__":
-    check_if_late()
+    raise Exception("This file should not be run directly.")
