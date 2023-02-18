@@ -38,7 +38,7 @@ def get_meeting_time(id: str, db: pyrebase):
         .val()
     )
     if meeting_time is None:
-        # Get the standard_time varibale from the database
+        # Get the standard_time variable from the database
         meeting_time = (
             db.child("Users").child(f"ID:{id}").child("standard_time").get().val()
         )
