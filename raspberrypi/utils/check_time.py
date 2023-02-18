@@ -16,16 +16,16 @@ def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyreba
         increment_prosecco(id, db)
         return
 
-    if is_late(arrival_time, meeting_time):
-        print("You are late!")
-        LATE_PENALTY = 1
-        increment_prosecco(id, db, LATE_PENALTY)
-        return
-
     if is_very_late(arrival_time, meeting_time):
         print("You are very late!")
         VERY_LATE_PENALTY = 2
-        increment_prosecco(id, db, VERY_LATE_PENALTY)
+        increment_prosecco(id, db, amount=VERY_LATE_PENALTY)
+        return
+
+    if is_late(arrival_time, meeting_time):
+        print("You are late!")
+        LATE_PENALTY = 1
+        increment_prosecco(id, db, amount=LATE_PENALTY)
         return
 
     print("You are on time!")
