@@ -24,11 +24,14 @@ def daily_update():
 
 
 def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
-    # Check if the user has a registered absence_dates today
-    absence_dates = (
-        db.child("Users").child(user_id).child("absence_dates").get().val()
-    )
-    # Continue if there is a registered absence_dates today
+    # Continue if there are no arrival_times in the database
+    arrival_times = db.child("Users").child(user_id).child("arrival_times").get().val()
+    if arrival_times is None:
+        # The user account has just been created
+        return False
+
+    # Continue if there was a registered absence_date yesterday
+    absence_dates = db.child("Users").child(user_id).child("absence_dates").get().val()
     if (absence_dates is not None) and (yesterday_date in absence_dates):
         return False
 
