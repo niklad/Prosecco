@@ -10,23 +10,25 @@ def daily_update():
     """
     firebase = firebase_setup()
     db = firebase.database()
-    # Get all users
     user_ids = db.child("Users").get().val()
     today = datetime.today()
-    current_date = today.strftime("%Y-%m-%d")
+    # Yesterday's date
+    yesterday = today - timedelta(days=1)
+    yesterday_date = yesterday.strftime("%Y-%m-%d")
+
     NO_SHOW_PENALTY = 2
     for user_id in user_ids:
-        if user_did_not_show(user_id, db, current_date):
+        if user_did_not_show(user_id, db, yesterday_date):
             increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
 
 
-def user_did_not_show(user_id: str, db: pyrebase, current_date: str):
+def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
     # Check if the user has a registered absence_dates today
     absence_dates = (
         db.child("Users").child(user_id).child("absence_dates").get().val()
     )
     # Continue if there is a registered absence_dates today
-    if (absence_dates is not None) and (current_date in absence_dates):
+    if (absence_dates is not None) and (yesterday_date in absence_dates):
         return False
 
     # Check if the user has a registered arrival_time today
@@ -34,7 +36,7 @@ def user_did_not_show(user_id: str, db: pyrebase, current_date: str):
         db.child("Users")
         .child(user_id)
         .child("arrival_times")
-        .child(current_date)
+        .child(yesterday_date)
         .get()
         .val()
     )
