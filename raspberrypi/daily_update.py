@@ -17,7 +17,9 @@ def daily_update():
 
     for user_id in users_ids:
         # Check if the user has a registered absence_dates today
-        absence_dates = db.child("Users").child(user_id).child("absence_dates").get().val()
+        absence_dates = (
+            db.child("Users").child(user_id).child("absence_dates").get().val()
+        )
         # Continue if there is an absence_dates with key current_date
         if (absence_dates is not None) and (current_date in absence_dates):
             continue
@@ -33,7 +35,8 @@ def daily_update():
         )
         if arrival_time is None:
             # If the user has not arrived, increment prosecco_marks by two
-            increment_prosecco(user_id, 2)
+            NO_SHOW_PENALTY = 2
+            increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
 
 
 if __name__ == "__main__":
