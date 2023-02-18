@@ -30,7 +30,7 @@ var st_username = document.querySelector("#st_u");
 var st_pin = document.querySelector("#st_p");
 var st_time = document.querySelector("#st_t");
 
-// Register ny møtetid
+// Register ny standard  møtetid
 function Register_Standard_Time() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
@@ -39,12 +39,14 @@ function Register_Standard_Time() {
   st_pin_value = st_pin.value;
   st_time_value = st_time.value;
 
+  var date = Get_Date_Str();
+
   usersRef.once('value', function(snapshot) {
     snapshot.forEach(function(userSnapshot) {
       var user = userSnapshot.val();
 
       if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
-        usersRef.child(userSnapshot['key']).update({'standard_time':String(st_time_value)});
+        usersRef.child(userSnapshot['key']).child('standard_time').update({[date]:String(st_time_value)});
       }
     });
   });
@@ -114,6 +116,7 @@ function Register_User() {
   r_username_value = username.value;
   r_pin_value = pin.value;
   m_ID_value = m_ID.value;
+  var date = Get_Date_Str();
 
   mIDRef.once('value', function(snapshot) {
     if (snapshot.exists()) {
@@ -121,7 +124,7 @@ function Register_User() {
     } else {
       alert("Your ID has been registered!");
       var new_user_ref = usersRef.child('ID:' + m_ID_value);
-      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':'09:15'});
+      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':{[date]:'09:15'}});
     }
   });
 }
@@ -141,21 +144,24 @@ dbRefObject.on('value', function(snapshot) {
     var school_status;
     var todays_meeting_time;
     var tomorrow_meeting_time;
+    
+    var todays_standard_time = get_standard_time(user, date);
+    var tomorrows_standard_time = get_standard_time(user, date_tomorrow);
 
     if (user['meeting_times']) {
       if (user['meeting_times'][date]) {
         todays_meeting_time = user['meeting_times'][date];
       } else {
-        todays_meeting_time = user['standard_time'];
+        todays_meeting_time = todays_standard_time;
       }
       if (user['meeting_times'][date_tomorrow]) {
         tomorrow_meeting_time = user['meeting_times'][date_tomorrow];
       } else {
-        tomorrow_meeting_time = user['standard_time'];
+        tomorrow_meeting_time = tomorrows_standard_time;
       }
     } else {
-      todays_meeting_time = user['standard_time'];
-      tomorrow_meeting_time = user['standard_time'];
+      todays_meeting_time = todays_standard_time;
+      tomorrow_meeting_time = tomorrows_standard_time;
     }
 
     if (user['absence_dates']) {
@@ -285,4 +291,22 @@ function Get_Date_Tomorrow_Str() {
   var TomorrowDateString = year + '-' + month + '-' + day;
 
   return TomorrowDateString;
+}
+
+function get_standard_time(user, date) {
+  var standard_times = user['standard_time'];
+  var standard_times_dates = Object.keys(standard_times).sort().reverse();
+  var standard_time;
+  
+  if (standard_times_dates[0] == date) {
+    if (standard_times_dates[1]) {
+      standard_time = user['standard_time'][standard_times_dates[1]];
+    } else {
+      standard_time = "09:15";
+    }
+  } else {
+    standard_time = user['standard_time'][standard_times_dates[0]];
+  }
+
+  return standard_time;
 }
