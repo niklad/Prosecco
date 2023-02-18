@@ -1,5 +1,5 @@
 import pyrebase
-from datetime import datetime
+from datetime import datetime, timedelta
 from utils.firebase_setup import firebase_setup
 from utils.check_time import increment_prosecco
 
@@ -20,6 +20,7 @@ def daily_update():
     for user_id in user_ids:
         if user_did_not_show(user_id, db, yesterday_date):
             increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
+    send_acknowledgement(db)
 
 
 def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
@@ -43,6 +44,10 @@ def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
     if arrival_time is None:
         return True
     return False
+
+
+def send_acknowledgement(db: pyrebase, yesterday_date: str):
+    db.child("daily_updates").child(yesterday_date).set("Done")
 
 
 if __name__ == "__main__":
