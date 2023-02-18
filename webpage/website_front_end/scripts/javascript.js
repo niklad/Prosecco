@@ -163,6 +163,15 @@ dbRefObject.on('value', function(snapshot) {
       tomorrow_meeting_time = user['standard_time'];
     }
 
+    if (user['absence_dates']) {
+      if (user['absence_dates'][date]) {
+        todays_meeting_time = 'Meldt fravær'
+      }
+      if (user['absence_dates'][date_tomorrow]) {
+        tomorrow_meeting_time = 'Meldt fravær';
+      }
+    }
+
     if(user['arrival_times']) {
       if (user['arrival_times'][date]) {
         if (user['departure_times']) {
