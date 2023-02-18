@@ -13,7 +13,7 @@ def main():
         except TypeError:
             continue
         check_time(id, arrival_time, departure_time, firebase)
-        give_random_processo(firebase)
+        give_random_processo(firebase, id)
 
 
 if __name__ == "__main__":
