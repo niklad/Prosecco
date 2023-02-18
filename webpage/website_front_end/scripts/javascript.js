@@ -59,25 +59,18 @@ function Register_Meeting_Time() {
   t_pin_value = t_pin.value;
   t_time_value = t_time.value;
 
-  var currentDate = new Date();
-  var tomorrow = new Date();
-  tomorrow.setDate(currentDate.getDate() + 1);
-  var year = tomorrow.getFullYear();
-  var month = tomorrow.getMonth() + 1; // months are 0-indexed, so we add 1 to get the correct month
-  var day = tomorrow.getDate();
-  if (String(day).length == 1) {
-    day = '0' + day;
-  }
-  if (String(month).length == 1) {
-    month = '0' + month;
-  }
+  var TomorrowDateString = Get_Date_Tomorrow_Str();
 
   usersRef.once('value', function(snapshot) {
     snapshot.forEach(function(userSnapshot) {
       var user = userSnapshot.val();
       if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
-        var dateString = year + '-' + month + '-' + day;
-        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time_value)});
+        if (user['absence_dates']) {
+          if (user['absence_dates'][TomorrowDateString]){
+            usersRef.child(userSnapshot['key'] + '/absence_dates/' + TomorrowDateString).remove()
+          }
+        }
+        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[TomorrowDateString]:String(t_time_value)});
       }
     });
   });
@@ -108,6 +101,8 @@ function Register_absence() {
       });
     });
   }
+
+  document.getElementById('fravaar_button').style.backgroundColor = '#C52525';
 }
 
 // Register ny bruker
