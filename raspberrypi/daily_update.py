@@ -20,7 +20,7 @@ def daily_update():
     for user_id in user_ids:
         if user_did_not_show(user_id, db, yesterday_date):
             increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
-    send_acknowledgement(db)
+    send_acknowledgement(db, yesterday_date)
 
 
 def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
