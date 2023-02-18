@@ -77,12 +77,15 @@
               <label for="mt_t" class="u-label">Ønsket møtetidspunkt</label>
               <input type="time" placeholder="10:15" id="mt_t" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
             </div>
-            <div class="u-align-left u-form-group u-form-submit u-label-top">
+            <div class="u-align-left u-form-group u-form-submit u-label-top sub-form-group">
               <a href="#" class="u-btn u-btn-submit u-button-style" onclick="Register_Meeting_Time()">Registrer</a>
               <input type="submit" value="submit" class="u-form-control-hidden">
+
+              <a href="#" class="u-btn u-btn-submit u-button-style link">Meld fravær</a>
+              <input type="submit" value="submit" class="u-form-control-hidden" id="fravaar" onclick="Register_absence()">
             </div>
-            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <!-- <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div> -->
             <input type="hidden" value="" name="recaptchaResponse">
             <input type="hidden" name="formServices" value="204978449a2fb23a4f324f90450f6ff2">
           </form>
