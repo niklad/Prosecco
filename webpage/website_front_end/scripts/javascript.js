@@ -130,11 +130,6 @@ dbRefObject.on('value', function(snapshot) {
     var todays_meeting_time;
     var tomorrow_meeting_time;
 
-    console.log(date);
-    // console.log(Get_Date_Tomorrow_Str());
-    // console.log(user[])
-
-
     if (user['meeting_times']) {
       if (user['meeting_times'][date]) {
         todays_meeting_time = user['meeting_times'][date];
@@ -143,6 +138,8 @@ dbRefObject.on('value', function(snapshot) {
       }
       if (user['meeting_times'][date_tomorrow]) {
         tomorrow_meeting_time = user['meeting_times'][date_tomorrow];
+      } else {
+        tomorrow_meeting_time = user['standard_time'];
       }
     } else {
       todays_meeting_time = user['standard_time'];
@@ -151,7 +148,6 @@ dbRefObject.on('value', function(snapshot) {
 
     if(user['arrival_times']) {
       if (user['arrival_times'][date]) {
-        // console.log(user['arrival_times'][date]);
         if (user['departure_times']) {
           if (user['departure_times'][date]) {
             school_status = 'Ikke på skolen';
@@ -162,7 +158,9 @@ dbRefObject.on('value', function(snapshot) {
         if (user['arrival_times'][date] > todays_meeting_time) {
           school_status = school_status + ' og fikk strek';
         }
-      } 
+      } else {
+        school_status = 'Ikke på skolen';
+      }
     } else {
       school_status = 'Ikke på skolen';
     }
@@ -266,14 +264,3 @@ function Get_Date_Tomorrow_Str() {
 
   return TomorrowDateString;
 }
-
-
-
-// var now = new Date();
-
-// now.on('value', function(snapshot){
-//   var now_hours = now.getHours();
-//   var now_minutes = now.getMinutes();
-
-//   console.log(now_hours + ':' + now_minutes)
-// });
