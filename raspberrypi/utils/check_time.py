@@ -2,7 +2,7 @@ import pyrebase
 from datetime import datetime, timedelta
 
 
-def check_if_late(id: str, arrival_time: str, departure_time: str, firebase: pyrebase):
+def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyrebase):
     # Return if the departure time is registred
     db = firebase.database()
     if departure_time is not None:
@@ -18,7 +18,14 @@ def check_if_late(id: str, arrival_time: str, departure_time: str, firebase: pyr
 
     if is_late(arrival_time, meeting_time):
         print("You are late!")
-        increment_prosecco(id, db)
+        LATE_PENALTY = 1
+        increment_prosecco(id, db, LATE_PENALTY)
+        return
+
+    if is_very_late(arrival_time, meeting_time):
+        print("You are very late!")
+        VERY_LATE_PENALTY = 2
+        increment_prosecco(id, db, VERY_LATE_PENALTY)
         return
 
     print("You are on time!")
@@ -56,22 +63,32 @@ def is_late(arrival_time: str, meeting_time: str):
     return False
 
 
-def is_safing(arrival_time: str, meeting_time: str):
-    """Safing is defined as arriving more than safing_limit minutes before meeting_time."""
-    safing_limit_minutes = 30
-    if datetime.strptime(arrival_time, "%H:%M:%S") < datetime.strptime(
+def is_very_late(arrival_time: str, meeting_time: str):
+    """Check if the arrival time (HH:MM:SS) is more than hour after meeting_time."""
+    VERY_LATE_LIMIT_HOURS = 1
+    if datetime.strptime(arrival_time, "%H:%M:%S") > datetime.strptime(
         meeting_time, "%H:%M:%S"
-    ) - timedelta(minutes=safing_limit_minutes):
+    ) + timedelta(hours=VERY_LATE_LIMIT_HOURS):
         return True
     return False
 
 
-def increment_prosecco(id: str, db: pyrebase):
+def is_safing(arrival_time: str, meeting_time: str):
+    """Safing is defined as arriving more than safing_limit minutes before meeting_time."""
+    SAFING_LIMIT_MINUTES = 30
+    if datetime.strptime(arrival_time, "%H:%M:%S") < datetime.strptime(
+        meeting_time, "%H:%M:%S"
+    ) - timedelta(minutes=SAFING_LIMIT_MINUTES):
+        return True
+    return False
+
+
+def increment_prosecco(id: str, db: pyrebase, amount: int = 1):
     # Increment the prosecco_mark variable in the database
     prosecco_marks = (
         db.child("Users").child(f"ID:{id}").child("prosecco_marks").get().val()
     )
-    prosecco_marks += 1
+    prosecco_marks += amount
     db.child("Users").child(f"ID:{id}").child("prosecco_marks").set(prosecco_marks)
     return
 
