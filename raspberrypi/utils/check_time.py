@@ -19,13 +19,13 @@ def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyreba
     if is_very_late(arrival_time, meeting_time):
         print("You are very late!")
         VERY_LATE_PENALTY = 2
-        increment_prosecco(id, db, amount=VERY_LATE_PENALTY)
+        increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
     if is_late(arrival_time, meeting_time):
         print("You are late!")
         LATE_PENALTY = 1
-        increment_prosecco(id, db, amount=LATE_PENALTY)
+        increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
 
     print("You are on time!")
@@ -83,12 +83,12 @@ def is_safing(arrival_time: str, meeting_time: str):
     return False
 
 
-def increment_prosecco(id: str, db: pyrebase, amount: int = 1):
+def increment_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
     prosecco_marks = (
         db.child("Users").child(f"ID:{id}").child("prosecco_marks").get().val()
     )
-    prosecco_marks += amount
+    prosecco_marks += penalty_points
     db.child("Users").child(f"ID:{id}").child("prosecco_marks").set(prosecco_marks)
     return
 
