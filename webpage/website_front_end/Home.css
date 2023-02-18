@@ -2,24 +2,41 @@
   min-height: 400px;
 }
 
-#status {
-  width:70%; 
-  margin-left:15%; 
-  margin-right:15%;
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  border: none;
+  padding: 10px;
+}
+
+
+.stats {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
   margin-top: 5%;
   border: 1px solid;
-  border-collapse: collapse;
-  /* border-bottom: 1px solid #ddd; */
-  /* width: 400px;
-  height: 100px; */
-  /* background-color: #04AA6D; */
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
+
+
 tr:nth-child(odd) {background-color: #e3e6e9;}
-tr:hover {background-color: rgb(87, 154, 192);}
+tr:nth-child(even) {background-color: #ffffff;}
+tr:hover {background-color: rgb(203, 207, 209);}
 td { font-size: 15px }
-/* th, td {
-  border-bottom: 1px solid #ddd;
-} */
+
+.stats th,
+.stats td {
+    padding: 12px 15px;
+}
+
+
+
 
 @media (max-width: 1199px) {
   #status {
