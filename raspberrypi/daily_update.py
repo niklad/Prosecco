@@ -2,6 +2,7 @@ import pyrebase
 from datetime import datetime, timedelta
 from utils.firebase_setup import firebase_setup
 from utils.check_time import increment_prosecco
+from utils.constants import NO_SHOW_PENALTY
 
 
 def daily_update():
@@ -16,7 +17,6 @@ def daily_update():
     yesterday = today - timedelta(days=1)
     yesterday_date = yesterday.strftime("%Y-%m-%d")
 
-    NO_SHOW_PENALTY = 2
     for user_id in user_ids:
         if user_did_not_show(user_id, db, yesterday_date):
             increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
