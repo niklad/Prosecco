@@ -41,14 +41,10 @@ function Register_Standard_Time() {
 
   usersRef.once('value', function(snapshot) {
     snapshot.forEach(function(userSnapshot) {
-      console.log(userSnapshot['key']);
       var user = userSnapshot.val();
 
       if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
         usersRef.child(userSnapshot['key']).update({'standard_time':String(st_time_value)});
-        console.log('The username and pin is correct.');
-      } else {
-        console.log('The username or pin is incorrect!');
       }
     });
   });
@@ -78,19 +74,40 @@ function Register_Meeting_Time() {
 
   usersRef.once('value', function(snapshot) {
     snapshot.forEach(function(userSnapshot) {
-      console.log(userSnapshot['key']);
       var user = userSnapshot.val();
       if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
-
         var dateString = year + '-' + month + '-' + day;
         usersRef.child(userSnapshot['key'] + '/meeting_times').update({[dateString]:String(t_time_value)});
-
-        console.log('The username and pin is correct.');
-      } else {
-        console.log('The username or pin is incorrect!');
       }
     });
   });
+}
+
+// Registrer fravær i morgen
+function Register_absence() {
+  var database = firebase.database();
+  var usersRef = database.ref('Users');
+
+  t_username_value = t_username.value;
+  t_pin_value = t_pin.value;
+
+  
+  var TomorrowDateString = Get_Date_Tomorrow_Str();
+  var TodaysDateString = Get_Date_Str();
+  var melding;
+
+  if (confirm('Er du sikker på at du vil melde fravær i morgen?')) {
+
+    usersRef.once('value', function(snapshot) {
+      snapshot.forEach(function(userSnapshot) {
+        var user = userSnapshot.val();
+        if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
+  
+          usersRef.child(userSnapshot['key'] + '/absence_dates').update({[TomorrowDateString]:TodaysDateString});
+        }
+      });
+    });
+  }
 }
 
 // Register ny bruker
@@ -114,13 +131,13 @@ function Register_User() {
   });
 }
 
+// Oppdater tabell
 dbRefObject.on('value', function(snapshot) {
 
   reset_tab();
   tab_info = [];
 
   snapshot.forEach(function(userSnapshot) {
-    console.log(userSnapshot['key']);
     var key = userSnapshot['key'];
     var user = userSnapshot.val();
 
@@ -150,19 +167,21 @@ dbRefObject.on('value', function(snapshot) {
       if (user['arrival_times'][date]) {
         if (user['departure_times']) {
           if (user['departure_times'][date]) {
-            school_status = 'Ikke på skolen';
+            school_status = 'Ikke på lesesal';
+          } else {
+            school_status = 'På lesesal'
           }
         } else {
-          school_status = 'På skolen';
+          school_status = 'På lesesal';
         }
         if (user['arrival_times'][date] > todays_meeting_time) {
           school_status = school_status + ' og fikk strek';
         }
       } else {
-        school_status = 'Ikke på skolen';
+        school_status = 'Ikke på lesesal';
       }
     } else {
-      school_status = 'Ikke på skolen';
+      school_status = 'Ikke på lesesal';
     }
 
     
@@ -184,7 +203,6 @@ dbRefObject.on('value', function(snapshot) {
   })
 
   tab_info.reverse();
-  console.log(tab_info);
 
   for (let i = 0; i < tab_info.length; i++) {
 
