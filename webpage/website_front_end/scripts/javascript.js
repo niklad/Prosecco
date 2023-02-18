@@ -236,9 +236,8 @@ dbRefObject.on('value', function(snapshot) {
 
 function reset_tab() {
   var tableRow = document.getElementById("status");
-
   
-  tableRow.innerHTML = ""
+  tableRow.innerHTML = "";
 
   var header = tableRow.createTHead();
 
@@ -248,6 +247,7 @@ function reset_tab() {
   var meeting_time_cell = row.insertCell(2);
   var tomorrow_meeting_time_cell = row.insertCell(3);
   var status_cell = row.insertCell(4);
+
   name_cell1.innerHTML = "<th><b>Navn</b></th>";
   p_mark_cell.innerHTML = "<th><b>Antall streker</b></th>";
   meeting_time_cell.innerHTML = "<th><b>Dagens møtetid</b></th>";
