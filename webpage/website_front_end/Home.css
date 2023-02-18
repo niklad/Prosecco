@@ -16,7 +16,20 @@
 }
 tr:nth-child(odd) {background-color: #e3e6e9;}
 tr:hover {background-color: rgb(87, 154, 192);}
-
+td { font-size: 15px }
 /* th, td {
   border-bottom: 1px solid #ddd;
 } */
+
+@media (max-width: 1199px) {
+  #status {
+    width:99%; 
+    margin-left:0.5%; 
+    margin-right:0%;
+    margin-top: 5%;
+    border: 0px solid;
+    border-collapse: collapse;
+  }
+
+  td { font-size: 10px }
+}
