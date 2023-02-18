@@ -11,6 +11,9 @@ def read_rfid(firebase: pyrebase):
         print("ID must be ten digits.")
         return
 
+    # Format to match database
+    id = f"ID:{id}"
+
     print()
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
@@ -19,26 +22,26 @@ def read_rfid(firebase: pyrebase):
     # Get arrival and departure times
     arrival_time = (
         firebase.database()
-        .child(f"Users/ID:{id}/arrival_times/{current_date}")
+        .child(f"Users/{id}/arrival_times/{current_date}")
         .get()
         .val()
     )
     departure_time = (
         firebase.database()
-        .child(f"Users/ID:{id}/departure_times/{current_date}")
+        .child(f"Users/{id}/departure_times/{current_date}")
         .get()
         .val()
     )
 
     if arrival_time is None:
-        firebase.database().child(f"Users/ID:{id}/arrival_times/{current_date}").set(
+        firebase.database().child(f"Users/{id}/arrival_times/{current_date}").set(
             current_time
         )
         arrival_time = current_time
         print(f"Arrival time set to {current_time}.")
 
     elif departure_time is None:
-        firebase.database().child(f"Users/ID:{id}/departure_times/{current_date}").set(
+        firebase.database().child(f"Users/{id}/departure_times/{current_date}").set(
             current_time
         )
         departure_time = current_time

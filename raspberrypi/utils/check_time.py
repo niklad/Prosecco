@@ -38,7 +38,7 @@ def get_meeting_time(id: str, db: pyrebase):
 
     meeting_time = (
         db.child("Users")
-        .child(f"ID:{id}")
+        .child(id)
         .child("meeting_times")
         .child(current_date)
         .get()
@@ -46,9 +46,7 @@ def get_meeting_time(id: str, db: pyrebase):
     )
     if meeting_time is None:
         # Get the standard_time variable from the database
-        meeting_time = (
-            db.child("Users").child(f"ID:{id}").child("standard_time").get().val()
-        )
+        meeting_time = db.child("Users").child(id).child("standard_time").get().val()
     meeting_time_seconds = "59"  # To allow for arriving within the minute
     meeting_time = f"{meeting_time}:{meeting_time_seconds}"
     return meeting_time
@@ -85,11 +83,9 @@ def is_safing(arrival_time: str, meeting_time: str):
 
 def increment_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
-    prosecco_marks = (
-        db.child("Users").child(f"ID:{id}").child("prosecco_marks").get().val()
-    )
+    prosecco_marks = db.child("Users").child(id).child("prosecco_marks").get().val()
     prosecco_marks += penalty_points
-    db.child("Users").child(f"ID:{id}").child("prosecco_marks").set(prosecco_marks)
+    db.child("Users").child(id).child("prosecco_marks").set(prosecco_marks)
     return
 
 
