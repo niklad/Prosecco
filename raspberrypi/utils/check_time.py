@@ -1,5 +1,11 @@
 import pyrebase
 from datetime import datetime, timedelta
+from utils.constants import (
+    LATE_PENALTY,
+    VERY_LATE_PENALTY,
+    VERY_LATE_LIMIT_HOURS,
+    SAFING_LIMIT_MINUTES,
+)
 
 
 def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyrebase):
@@ -18,13 +24,11 @@ def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyreba
 
     if is_very_late(arrival_time, meeting_time):
         print("You are very late!")
-        VERY_LATE_PENALTY = 2
         increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
     if is_late(arrival_time, meeting_time):
         print("You are late!")
-        LATE_PENALTY = 1
         increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
 
@@ -63,7 +67,6 @@ def is_late(arrival_time: str, meeting_time: str):
 
 def is_very_late(arrival_time: str, meeting_time: str):
     """Check if the arrival time (HH:MM:SS) is more than hour after meeting_time."""
-    VERY_LATE_LIMIT_HOURS = 1
     if datetime.strptime(arrival_time, "%H:%M:%S") > datetime.strptime(
         meeting_time, "%H:%M:%S"
     ) + timedelta(hours=VERY_LATE_LIMIT_HOURS):
@@ -73,7 +76,6 @@ def is_very_late(arrival_time: str, meeting_time: str):
 
 def is_safing(arrival_time: str, meeting_time: str):
     """Safing is defined as arriving more than safing_limit minutes before meeting_time."""
-    SAFING_LIMIT_MINUTES = 30
     if datetime.strptime(arrival_time, "%H:%M:%S") < datetime.strptime(
         meeting_time, "%H:%M:%S"
     ) - timedelta(minutes=SAFING_LIMIT_MINUTES):
