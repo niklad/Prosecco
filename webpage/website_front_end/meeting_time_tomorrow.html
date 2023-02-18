@@ -48,7 +48,7 @@
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="index.html">Home</a>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="index.html">Hjem</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="meeting_time_tomorrow.html">Møtetid i morgen</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="standard_meeting_time.html">Standard møtetid</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="memes.html">Memes</a>
@@ -77,33 +77,18 @@
               <label for="mt_t" class="u-label">Ønsket møtetidspunkt</label>
               <input type="time" placeholder="10:15" id="mt_t" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
             </div>
-            <div class="u-align-left u-form-group u-form-submit u-label-top">
-              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="Register_Meeting_Time()">Registrer</a>
+            <div class="u-align-left u-form-group u-form-submit u-label-top sub-form-group" id="register_button">
+              <a href="#" class="u-btn u-btn-submit u-button-style" onclick="Register_Meeting_Time()" id="register">Registrer</a>
               <input type="submit" value="submit" class="u-form-control-hidden">
+
+              <a href="#" class="u-btn u-btn-submit u-button-style link" id="fravaar_button" onclick="Register_absence()">Meld fravær</a>
+              <input type="submit" value="submit" class="u-form-control-hidden link" id="fravaar">
             </div>
-            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
             <input type="hidden" value="" name="recaptchaResponse">
             <input type="hidden" name="formServices" value="204978449a2fb23a4f324f90450f6ff2">
           </form>
         </div>
       </div>
     </section>
-    
-    
-    <!-- <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-ddfa"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the Text Element.</p>
-      </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-        <span>Website Templates</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="" target="_blank">
-        <span>Website Builder Software</span>
-      </a>. 
-    </section> -->
     <script class="u-script" type="text/javascript" src="scripts/javascript.js" defer=""></script>
 </body></html>

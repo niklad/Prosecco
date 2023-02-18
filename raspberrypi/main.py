@@ -1,6 +1,6 @@
 from utils.firebase_setup import firebase_setup
 from utils.read_rfid import read_rfid
-from utils.check_time import check_if_late
+from utils.check_time import check_time
 from utils.joker_prosecco import give_random_processo
 
 
@@ -12,7 +12,7 @@ def main():
             id, arrival_time, departure_time = read_rfid(firebase)
         except TypeError:
             continue
-        check_if_late(id, arrival_time, departure_time, firebase)
+        check_time(id, arrival_time, departure_time, firebase)
         give_random_processo(firebase)
 
 
