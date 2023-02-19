@@ -10,7 +10,7 @@ def read_rfid(firebase: pyrebase):
     # Check if ID is ten numbers
     if len(id) != 10 or not id.isdigit():
         print("ID must be ten digits.")
-        return
+        return None, None, None
 
     # Format to match database
     id = f"ID:{id}"
@@ -18,7 +18,7 @@ def read_rfid(firebase: pyrebase):
     # Check if ID exists in database
     if firebase.database().child(f"Users/{id}").get().val() is None:
         print("ID does not exist.")
-        return
+        return None, None, None
 
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
