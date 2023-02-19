@@ -8,12 +8,13 @@ def main():
     firebase = firebase_setup()
 
     while True:
-        try:
-            id, arrival_time, departure_time = read_rfid(firebase)
-        except TypeError:
+        id, arrival_time, departure_time = read_rfid(firebase)
+        if id is None:
             continue
         check_time(id, arrival_time, departure_time, firebase)
-        give_random_processo(firebase, id)
+        # Give joker prosecco upon arrival only
+        if departure_time is None:
+            give_random_processo(firebase, id)
 
 
 if __name__ == "__main__":
