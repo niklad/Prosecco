@@ -12,11 +12,12 @@ def give_random_processo(firebase: pyrebase):
     db = firebase.database()
 
     id_list = list(db.child("Users").get().val().keys())
+
     number_of_participants = len(id_list)
     the_chosen_number = random.randint(0, number_of_participants - 1)
     the_chosen_one = id_list[the_chosen_number]
 
-    joker_proseco = random.randint(0, 100) >= 1
+    joker_proseco = random.randint(0, 100) <= 1
     if joker_proseco:
         increment_prosecco(the_chosen_one, db, JOKER_PROSECCO_PENALTY)
         print(str(the_chosen_one), " got a Joker Prosecco!!!")
