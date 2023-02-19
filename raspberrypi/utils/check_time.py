@@ -5,6 +5,7 @@ from utils.constants import (
     VERY_LATE_PENALTY,
     VERY_LATE_LIMIT_HOURS,
     SAFING_LIMIT_MINUTES,
+    MEETING_TIME_SECONDS,
 )
 
 
@@ -49,10 +50,18 @@ def get_meeting_time(id: str, db: pyrebase):
         .val()
     )
     if meeting_time is None:
-        # Get the standard_time variable from the database
-        meeting_time = db.child("Users").child(id).child("standard_time").get().val()
-    meeting_time_seconds = "59"  # To allow for arriving within the minute
-    meeting_time = f"{meeting_time}:{meeting_time_seconds}"
+        # Get the standard times from the standard_time node in the database
+        standard_times = db.child("Users").child(id).child("standard_time").get().val()
+        # If the last standard time in the standard_times dictionary was set today, use the second to last one
+        if (
+            datetime.strptime(list(standard_times.keys())[-1], "%Y-%m-%d").date()
+            == today.date()
+        ):
+            meeting_time = list(standard_times.values())[-2]
+        else:
+            meeting_time = list(standard_times.values())[-1]
+
+    meeting_time = f"{meeting_time}:{MEETING_TIME_SECONDS}"
     return meeting_time
 
 
