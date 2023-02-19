@@ -2,7 +2,7 @@ import pyrebase
 from datetime import datetime
 
 
-def read_rfid(firebase: pyrebase):
+def read_rfid(db: pyrebase):
     print()
     id = input("Enter ID: ")
     print()
@@ -16,7 +16,7 @@ def read_rfid(firebase: pyrebase):
     id = f"ID:{id}"
 
     # Check if ID exists in database
-    if firebase.database().child(f"Users/{id}").get().val() is None:
+    if db.child(f"Users/{id}").get().val() is None:
         print("ID does not exist.")
         return None, None, None
 
@@ -25,30 +25,16 @@ def read_rfid(firebase: pyrebase):
     current_date = now.strftime("%Y-%m-%d")
 
     # Get arrival and departure times
-    arrival_time = (
-        firebase.database()
-        .child(f"Users/{id}/arrival_times/{current_date}")
-        .get()
-        .val()
-    )
-    departure_time = (
-        firebase.database()
-        .child(f"Users/{id}/departure_times/{current_date}")
-        .get()
-        .val()
-    )
+    arrival_time = db.child(f"Users/{id}/arrival_times/{current_date}").get().val()
+    departure_time = db.child(f"Users/{id}/departure_times/{current_date}").get().val()
 
     if arrival_time is None:
-        firebase.database().child(f"Users/{id}/arrival_times/{current_date}").set(
-            current_time
-        )
+        db.child(f"Users/{id}/arrival_times/{current_date}").set(current_time)
         arrival_time = current_time
         print(f"Arrival time set to {current_time}.")
 
     elif departure_time is None:
-        firebase.database().child(f"Users/{id}/departure_times/{current_date}").set(
-            current_time
-        )
+        db.child(f"Users/{id}/departure_times/{current_date}").set(current_time)
         departure_time = current_time
         print(f"Departure time set to {current_time}.")
 

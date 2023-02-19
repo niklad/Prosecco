@@ -9,9 +9,8 @@ from utils.constants import (
 )
 
 
-def check_time(id: str, arrival_time: str, departure_time: str, firebase: pyrebase):
+def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
     # Return if the departure time is registred
-    db = firebase.database()
     if departure_time is not None:
         return
 

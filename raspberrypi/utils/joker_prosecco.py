@@ -4,13 +4,11 @@ from utils.check_time import increment_prosecco
 from utils.constants import JOKER_PROSECCO_PENALTY
 
 
-def give_random_processo(firebase: pyrebase, id):
+def give_random_processo(db: pyrebase, id):
     """
     - Everyday choose a random ID
     - Everyday choose a random number between 0-100 if number under 6 then give a Joker processo
     """
-    db = firebase.database()
-
     id_list = list(db.child("Users").get().val().keys())
     id_list.remove(id)
     number_of_participants = len(id_list)

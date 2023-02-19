@@ -5,16 +5,16 @@ from utils.joker_prosecco import give_random_processo
 
 
 def main():
-    firebase = firebase_setup()
+    db = firebase_setup()
 
     while True:
-        id, arrival_time, departure_time = read_rfid(firebase)
+        id, arrival_time, departure_time = read_rfid(db)
         if id is None:
             continue
-        check_time(id, arrival_time, departure_time, firebase)
+        check_time(id, arrival_time, departure_time, db)
         # Give joker prosecco upon arrival only
         if departure_time is None:
-            give_random_processo(firebase, id)
+            give_random_processo(db, id)
 
 
 if __name__ == "__main__":
