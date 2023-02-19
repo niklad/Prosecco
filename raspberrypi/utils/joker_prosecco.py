@@ -1,6 +1,7 @@
 import pyrebase
 import random
 from utils.check_time import increment_prosecco
+from utils.constants import JOKER_PROSECCO_PENALTY
 
 
 def give_random_processo(firebase: pyrebase):
@@ -18,7 +19,7 @@ def give_random_processo(firebase: pyrebase):
 
     joker_proseco = random.randint(0, 100) <= 1
     if joker_proseco:
-        increment_prosecco(the_chosen_one)
+        increment_prosecco(the_chosen_one, db, JOKER_PROSECCO_PENALTY)
         print(str(the_chosen_one), " got a Joker Prosecco!!!")
 
 
