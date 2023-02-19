@@ -9,18 +9,22 @@ def daily_update():
     """Check if everyone in the database who do not have
     a registered absence_dates today have arrived.
     """
-    firebase = firebase_setup()
-    db = firebase.database()
+    db = firebase_setup()
     user_ids = db.child("Users").get().val()
     today = datetime.today()
     # Yesterday's date
     yesterday = today - timedelta(days=1)
     yesterday_date = yesterday.strftime("%Y-%m-%d")
 
+    if daily_update_was_done(db, yesterday_date):
+        return
+
     for user_id in user_ids:
         if user_did_not_show(user_id, db, yesterday_date):
             increment_prosecco(user_id, db, penalty_points=NO_SHOW_PENALTY)
     send_acknowledgement(db, yesterday_date)
+    # Status "Done" should be written to daily_update.log
+    return f"{yesterday_date}: Done"
 
 
 def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
@@ -51,6 +55,13 @@ def user_did_not_show(user_id: str, db: pyrebase, yesterday_date: str):
 
 def send_acknowledgement(db: pyrebase, yesterday_date: str):
     db.child("daily_updates").child(yesterday_date).set("Done")
+
+
+def daily_update_was_done(db: pyrebase, yesterday_date: str):
+    daily_update_status = db.child("daily_updates").child(yesterday_date).get().val()
+    if daily_update_status == "Done":
+        return True
+    return False
 
 
 if __name__ == "__main__":
