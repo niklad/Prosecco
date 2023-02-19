@@ -17,17 +17,17 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
     # Check if there is a meeting time set for today
     meeting_time = get_meeting_time(id, db)
 
-    if is_safing(arrival_time, meeting_time):
+    if user_is_safing(arrival_time, meeting_time):
         print("You are safing!")
         increment_prosecco(id, db)
         return
 
-    if is_very_late(arrival_time, meeting_time):
+    if user_is_very_late(arrival_time, meeting_time):
         print("You are very late!")
         increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
-    if is_late(arrival_time, meeting_time):
+    if user_is_late(arrival_time, meeting_time):
         print("You are late!")
         increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
@@ -64,7 +64,7 @@ def get_meeting_time(id: str, db: pyrebase):
     return meeting_time
 
 
-def is_late(arrival_time: str, meeting_time: str):
+def user_is_late(arrival_time: str, meeting_time: str):
     """Check if the arrival time (HH:MM:SS) is later than the meeting time."""
     if datetime.strptime(arrival_time, "%H:%M:%S") > datetime.strptime(
         meeting_time, "%H:%M:%S"
@@ -73,7 +73,7 @@ def is_late(arrival_time: str, meeting_time: str):
     return False
 
 
-def is_very_late(arrival_time: str, meeting_time: str):
+def user_is_very_late(arrival_time: str, meeting_time: str):
     """Check if the arrival time (HH:MM:SS) is more than hour after meeting_time."""
     if datetime.strptime(arrival_time, "%H:%M:%S") > datetime.strptime(
         meeting_time, "%H:%M:%S"
@@ -82,7 +82,7 @@ def is_very_late(arrival_time: str, meeting_time: str):
     return False
 
 
-def is_safing(arrival_time: str, meeting_time: str):
+def user_is_safing(arrival_time: str, meeting_time: str):
     """Safing is defined as arriving more than safing_limit minutes before meeting_time."""
     if datetime.strptime(arrival_time, "%H:%M:%S") < datetime.strptime(
         meeting_time, "%H:%M:%S"
