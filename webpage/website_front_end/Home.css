@@ -50,3 +50,17 @@ td { font-size: 15px }
 
   td { font-size: 10px }
 }
+
+.joker_prosecco_table{
+  /* margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%; */
+  width: 45%;
+  float: left;
+  margin-right: 5%;
+}
+
+.joker{
+  margin-left: 15%;
+  margin-right: 15%; 
+}
