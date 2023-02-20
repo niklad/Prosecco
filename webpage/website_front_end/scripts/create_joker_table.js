@@ -30,7 +30,7 @@ joker.on('value', function(snapshot) {
         for (let i = 0; i < nr_joker_prosecco; i++) {
             const image = document.createElement("img");
             image.setAttribute("src", "./images/goblin.jpg");
-            image.setAttribute("width", "15");
+            image.setAttribute("width", "10");
             container.appendChild(image);
             // Code to be executed inside the loop
         };
