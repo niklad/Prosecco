@@ -1,0 +1,52 @@
+.u-section-1 .u-sheet-1 {
+  min-height: 400px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  border: none;
+  padding: 10px;
+}
+
+
+.stats {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%;
+  border: 1px solid;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+
+tr:nth-child(odd) {background-color: #e3e6e9;}
+tr:nth-child(even) {background-color: #ffffff;}
+tr:hover {background-color: rgb(203, 207, 209);}
+td { font-size: 15px }
+
+.stats th,
+.stats td {
+    padding: 12px 15px;
+}
+
+
+
+
+@media (max-width: 1199px) {
+  #status {
+    width:99%; 
+    margin-left:0.5%; 
+    margin-right:0%;
+    margin-top: 5%;
+    border: 0px solid;
+    border-collapse: collapse;
+  }
+
+  td { font-size: 10px }
+}
