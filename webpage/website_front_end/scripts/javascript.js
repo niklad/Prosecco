@@ -116,7 +116,7 @@ function Register_User() {
   r_username_value = username.value;
   r_pin_value = pin.value;
   m_ID_value = m_ID.value;
-  var date = Get_Date_Str();
+  var yesterday_date = Get_Date_Yesterday_Str();
 
   mIDRef.once('value', function(snapshot) {
     if (snapshot.exists()) {
@@ -124,7 +124,7 @@ function Register_User() {
     } else {
       alert("Your ID has been registered!");
       var new_user_ref = usersRef.child('ID:' + m_ID_value);
-      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':{[date]:'09:15'}});
+      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':{[yesterday_date]:'09:15'}});
     }
   });
 }
@@ -292,6 +292,27 @@ function Get_Date_Tomorrow_Str() {
 
   return TomorrowDateString;
 }
+
+function Get_Date_Yesterday_Str() {
+  var currentDate = new Date();
+  var tomorrow = new Date();
+  tomorrow.setDate(currentDate.getDate() - 1);
+
+  var year = tomorrow.getFullYear();
+  var month = tomorrow.getMonth() + 1; // months are 0-indexed, so we add 1 to get the correct month
+  var day = tomorrow.getDate();
+  if (String(day).length == 1) {
+    day = '0' + day;
+  }
+  if (String(month).length == 1) {
+    month = '0' + month;
+  }
+
+  var TomorrowDateString = year + '-' + month + '-' + day;
+
+  return TomorrowDateString;
+}
+
 
 function get_standard_time(user, date) {
   var standard_times = user['standard_time'];
