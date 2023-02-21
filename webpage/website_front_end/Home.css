@@ -60,7 +60,21 @@ td { font-size: 15px }
   margin-right: 5%;
 }
 
+
 .joker{
   margin-left: 15%;
-  margin-right: 15%; 
+  margin-right: 70%; 
+  margin-top: 5%;
+  border-width:3px; 
+  border-style:solid; 
+  border-color:#89a8b8; 
+  border-radius: 25px;
+  padding-left:30px;
+  color: #222a38;
+
+};
+
+h5{
+  padding-top:10px;
+  padding-bottom:10px;
 }
