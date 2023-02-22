@@ -3,7 +3,6 @@ from datetime import datetime
 from utils.gpio import blink_LED, turn_off_GPIO_pin
 from utils.constants import (
     GREEN_LED_PIN,
-    GREEN_LED_PIN,
     DEPARTING_NUMBER_OF_BLINKS,
     BLINK_DELAY,
 )
