@@ -9,7 +9,7 @@ from utils.constants import (
     GREEN_LED_PIN,
     RED_LED_PIN,
 )
-from raspberrypi.utils.gpio import blink_LED
+from utils.gpio import blink_LED
 
 
 def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
