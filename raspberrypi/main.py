@@ -8,10 +8,10 @@ from utils.constants import GREEN_LED_PIN
 
 def main():
     configure_GPIO_pins()
-    turn_on_GPIO_pin(GREEN_LED_PIN)
     db = firebase_setup()
 
     while True:
+        turn_on_GPIO_pin(GREEN_LED_PIN)
         id, arrival_time, departure_time = read_rfid(db)
         if id is None:
             continue
