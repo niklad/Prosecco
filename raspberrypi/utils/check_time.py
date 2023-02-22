@@ -22,24 +22,24 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
 
     if user_is_safing(arrival_time, meeting_time):
         print("You are safing!")
-        blink_LED(RED_LED_PIN, number_of_blinks=3, delay=0.5)
+        blink_LED(RED_LED_PIN, number_of_blinks=3, delay=0.3)
         increment_prosecco(id, db)
         return
 
     if user_is_very_late(arrival_time, meeting_time):
         print("You are very late!")
-        blink_LED(RED_LED_PIN, number_of_blinks=2, delay=0.5)
+        blink_LED(RED_LED_PIN, number_of_blinks=2, delay=0.3)
         increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
     if user_is_late(arrival_time, meeting_time):
         print("You are late!")
-        blink_LED(RED_LED_PIN, number_of_blinks=1, delay=0.5)
+        blink_LED(RED_LED_PIN, number_of_blinks=1, delay=0.3)
         increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
 
     print("You are on time!")
-    blink_LED(GREEN_LED_PIN, number_of_blinks=3, delay=0.5)
+    blink_LED(GREEN_LED_PIN, number_of_blinks=1, delay=0.3)
     return
 
 
