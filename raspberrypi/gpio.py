@@ -5,14 +5,8 @@ import sys
 import RPi.GPIO as GPIO
 
 
-# Import the correct GPIO module for the platform
-if os.name == 'posix':
-    if sys.platform.startswith('linux'):
-        from . import _pigpio
-    else:
-        print("Bing bong")
-
-
 def turn_on_GPIO0():
     """Turn on the GPIO0 LED."""
-    _pigpio.turn_on_GPIO0()
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(0, GPIO.OUT)
+    GPIO.output(0, GPIO.HIGH)
