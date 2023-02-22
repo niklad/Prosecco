@@ -21,6 +21,5 @@ def main():
             give_random_processo(db, id)
 
 
-
 if __name__ == "__main__":
     main()
