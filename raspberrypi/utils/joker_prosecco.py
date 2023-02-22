@@ -20,7 +20,7 @@ def give_random_processo(db: pyrebase, id):
         db.child("Users").child(the_chosen_one_id).child("name").get().val()
     )
 
-    joker_proseco = random.randint(0, 100) >= 1
+    joker_proseco = random.randint(0, 100) <= 1
     if joker_proseco:
         increment_prosecco(the_chosen_one_id, db, JOKER_PROSECCO_PENALTY)
         print(f"{the_chosen_one_name} got a Joker Prosecco!!!")
