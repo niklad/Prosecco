@@ -7,7 +7,7 @@ from utils.constants import (
     SAFING_LIMIT_MINUTES,
     MEETING_TIME_SECONDS,
     GREEN_LED_PIN,
-    RED_LED_PIN,
+    BLUE_LED_PIN,
     ON_TIME_NUMBER_OF_BLINKS,
     LATE_NUMBER_OF_BLINKS,
     VERY_LATE_NUMBER_OF_BLINKS,
@@ -27,19 +27,19 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
 
     if user_is_safing(arrival_time, meeting_time):
         print("You are safing!")
-        blink_LED(RED_LED_PIN, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LED(BLUE_LED_PIN, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db)
         return
 
     if user_is_very_late(arrival_time, meeting_time):
         print("You are very late!")
-        blink_LED(RED_LED_PIN, VERY_LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LED(BLUE_LED_PIN, VERY_LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
     if user_is_late(arrival_time, meeting_time):
         print("You are late!")
-        blink_LED(RED_LED_PIN, LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LED(BLUE_LED_PIN, LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
 

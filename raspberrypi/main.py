@@ -2,11 +2,13 @@ from utils.firebase_setup import firebase_setup
 from utils.read_rfid import read_rfid
 from utils.check_time import check_time
 from utils.joker_prosecco import give_random_processo
-from utils.gpio import configure_GPIO_pins
+from utils.gpio import configure_GPIO_pins, turn_on_GPIO_pin
+from utils.constants import GREEN_LED_PIN
 
 
 def main():
     configure_GPIO_pins()
+    turn_on_GPIO_pin(GREEN_LED_PIN)
     db = firebase_setup()
 
     while True:
