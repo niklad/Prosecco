@@ -1,5 +1,12 @@
 import pyrebase
 from datetime import datetime
+from utils.gpio import blink_LED, turn_off_GPIO_pin
+from utils.constants import (
+    GREEN_LED_PIN,
+    GREEN_LED_PIN,
+    DEPARTING_NUMBER_OF_BLINKS,
+    BLINK_DELAY,
+)
 
 
 def read_rfid(db: pyrebase):
@@ -20,13 +27,17 @@ def read_rfid(db: pyrebase):
         print("ID does not exist.")
         return None, None, None
 
+    turn_off_GPIO_pin(GREEN_LED_PIN)
+
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.strftime("%Y-%m-%d")
 
     # Get arrival and departure times
-    arrival_time = db.child(f"Users/{id}/arrival_times/{current_date}").get().val()
-    departure_time = db.child(f"Users/{id}/departure_times/{current_date}").get().val()
+    arrival_time = db.child(
+        f"Users/{id}/arrival_times/{current_date}").get().val()
+    departure_time = db.child(
+        f"Users/{id}/departure_times/{current_date}").get().val()
 
     if arrival_time is None:
         db.child(f"Users/{id}/arrival_times/{current_date}").set(current_time)
@@ -34,8 +45,10 @@ def read_rfid(db: pyrebase):
         print(f"Arrival time set to {current_time}.")
 
     elif departure_time is None:
-        db.child(f"Users/{id}/departure_times/{current_date}").set(current_time)
+        db.child(
+            f"Users/{id}/departure_times/{current_date}").set(current_time)
         departure_time = current_time
+        blink_LED(GREEN_LED_PIN, DEPARTING_NUMBER_OF_BLINKS, BLINK_DELAY)
         print(f"Departure time set to {current_time}.")
 
     else:
