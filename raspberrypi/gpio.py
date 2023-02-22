@@ -2,7 +2,7 @@
 
 import os
 import sys
-import warnings
+import RPi.GPIO as GPIO
 
 
 # Import the correct GPIO module for the platform
