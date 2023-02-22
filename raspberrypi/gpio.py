@@ -4,8 +4,6 @@ import os
 import sys
 import warnings
 
-from . import pins
-from . import utils
 
 # Import the correct GPIO module for the platform
 if os.name == 'posix':
