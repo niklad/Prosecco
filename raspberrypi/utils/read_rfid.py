@@ -1,6 +1,5 @@
 import pyrebase
 from datetime import datetime
-from gpio import turn_on_GPIO0
 
 
 def read_rfid(db: pyrebase):
@@ -32,7 +31,6 @@ def read_rfid(db: pyrebase):
     if arrival_time is None:
         db.child(f"Users/{id}/arrival_times/{current_date}").set(current_time)
         arrival_time = current_time
-        turn_on_GPIO0()
         print(f"Arrival time set to {current_time}.")
 
     elif departure_time is None:
