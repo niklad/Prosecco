@@ -10,3 +10,4 @@ def turn_on_GPIO0():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(0, GPIO.OUT)
     GPIO.output(0, GPIO.HIGH)
+    print("GPIO0 turned on.")
