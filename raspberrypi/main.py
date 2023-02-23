@@ -4,9 +4,7 @@ from utils.check_time import check_time
 from utils.joker_prosecco import give_random_processo
 from utils.gpio import (configure_GPIO_pins,
                         turn_on_GPIO_pin,
-                        turn_off_GPIO_pin,
-                        lcd_init,
-                        lcd_send,)
+                        turn_off_GPIO_pin)
 from utils.constants import GREEN_LED_PIN, BLUE_LED_PIN
 
 
