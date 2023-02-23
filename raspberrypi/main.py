@@ -23,7 +23,7 @@ def main():
             if departure_time is None:
                 give_random_processo(db, id)
         except KeyboardInterrupt:
-            print("Exiting...")
+            print("\nExiting...")
             break
         finally:
             print("An error occured. Please reboot or contact Niklas.")
