@@ -14,6 +14,7 @@ def main():
 
     while True:
         try:
+            turn_off_GPIO_pin(BLUE_LED_PIN)
             turn_on_GPIO_pin(GREEN_LED_PIN)
             id, arrival_time, departure_time = read_rfid(db)
             if id is None:
@@ -26,7 +27,7 @@ def main():
             print("\nExiting...")
             break
         finally:
-            print("An error occured. Please reboot or contact Niklas.")
+            print("Program not running. Please reboot or contact Niklas.")
             turn_off_GPIO_pin(GREEN_LED_PIN)
             turn_on_GPIO_pin(BLUE_LED_PIN)
 
