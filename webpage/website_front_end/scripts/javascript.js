@@ -86,7 +86,7 @@ function Register_absence() {
   t_username_value = t_username.value;
   t_pin_value = t_pin.value;
 
-  
+
   var TomorrowDateString = Get_Date_Tomorrow_Str();
   var TodaysDateString = Get_Date_Str();
   var melding;
@@ -97,7 +97,7 @@ function Register_absence() {
       snapshot.forEach(function(userSnapshot) {
         var user = userSnapshot.val();
         if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
-  
+
           usersRef.child(userSnapshot['key'] + '/absence_dates').update({[TomorrowDateString]:TodaysDateString});
         }
       });
@@ -141,10 +141,10 @@ dbRefObject.on('value', function(snapshot) {
 
     var date = Get_Date_Str();
     var date_tomorrow = Get_Date_Tomorrow_Str();
-    var school_status;
+    var presence_status;
     var todays_meeting_time;
     var tomorrow_meeting_time;
-    
+
     var todays_standard_time = get_standard_time(user, date);
     var tomorrows_standard_time = get_standard_time(user, date_tomorrow);
 
@@ -173,35 +173,32 @@ dbRefObject.on('value', function(snapshot) {
       }
     }
 
-    if(user['arrival_times']) {
-      if (user['arrival_times'][date]) {
-        if (user['departure_times']) {
-          if (user['departure_times'][date]) {
-            school_status = 'Ikke på lesesal';
-          } else {
-            school_status = 'På lesesal'
-          }
-        } else {
-          school_status = 'På lesesal';
-        }
-        if (user['arrival_times'][date] > todays_meeting_time) {
-          school_status = school_status + ' og fikk strek';
-        }
-      } else {
-        school_status = 'Ikke på lesesal';
-      }
-    } else {
-      school_status = 'Ikke på lesesal';
+    // Set presence status
+    if (user['absence_dates'] && user['absence_dates'][date]) {
+        // Leave status field empty
+        presence_status = '';
     }
-
-    
+    else if (user['departure_times'] && user['departure_times'][date]) {
+        presence_status = 'Har dratt hjem';
+    }
+    else if (user['arrival_times'] && user['arrival_times'][date]) {
+        presence_status = 'Har kommet på sal';
+    }
+    else {
+        presence_status = 'Har ikke kommet på sal';
+    }
+    if (presence_status == 'Har kommet på sal' || presence_status == 'Har ikke kommet på sal') {
+        if (user['arrival_times'][date] > todays_meeting_time) {
+            presence_status = 'Kom for sent';
+        }
+    }
 
     data = {
       'name': user['name'],
       'prosecco_marks': user['prosecco_marks'],
       'meeting_time': todays_meeting_time,
       'tomorrow_meeting_time': tomorrow_meeting_time,
-      'status': school_status
+      'status': presence_status
     };
 
     tab_info.push(data);
@@ -236,7 +233,7 @@ dbRefObject.on('value', function(snapshot) {
 
 function reset_tab() {
   var tableRow = document.getElementById("status");
-  
+
   tableRow.innerHTML = "";
 
   var header = tableRow.createTHead();
@@ -318,7 +315,7 @@ function get_standard_time(user, date) {
   var standard_times = user['standard_time'];
   var standard_times_dates = Object.keys(standard_times).sort().reverse();
   var standard_time;
-  
+
   if (standard_times_dates[0] == date) {
     if (standard_times_dates[1]) {
       standard_time = user['standard_time'][standard_times_dates[1]];
