@@ -6,19 +6,18 @@ window.addEventListener('load', function() {
     if (localStorage.getItem("username")) {
         log_button.innerHTML = "Logg ut"
         log_button_pad.innerHTML = "Logg ut"
-        
         // var currentHTML = document.location.pathname.split("/").pop();
-        if (currentHTML == 'index.html' || currentHTML == 'memes.html' || currentHTML == 'regler.html' || currentHTML == 'registrer.html') {
-            var classified_mt = document.getElementById("classified_mt");
-            var classified_st = document.getElementById("classified_st");
-            var classified_mt2 = document.getElementById("classified_mt2");
-            var classified_st2 = document.getElementById("classified_st2");
+        // if (currentHTML == 'index.html' || currentHTML == 'memes.html' || currentHTML == 'regler.html' || currentHTML == 'registrer.html') {
+        var classified_mt = document.getElementById("classified_mt");
+        var classified_st = document.getElementById("classified_st");
+        var classified_mt2 = document.getElementById("classified_mt2");
+        var classified_st2 = document.getElementById("classified_st2");
 
-            classified_mt.style.display = 'block';
-            classified_st.style.display = 'block';
-            classified_mt2.style.display = 'block';
-            classified_st2.style.display = 'block';
-        }
+        classified_mt.style.display = 'block';
+        classified_st.style.display = 'block';
+        classified_mt2.style.display = 'block';
+        classified_st2.style.display = 'block';
+        // }
 
         if (currentHTML != 'registrer.html') {
             var reg = document.getElementById("reg");
