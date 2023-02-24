@@ -201,8 +201,6 @@ dbRefObject.on('value', function(snapshot) {
           presence_status = 'Kom for sent';
         }
       }
-        
-    }
 
     data = {
       'name': user['name'],
