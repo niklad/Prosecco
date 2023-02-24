@@ -9,6 +9,7 @@ var joker = database.ref('Users');
 
 joker.on('value', function(snapshot) {
     const container = document.getElementById("joker_name");
+    container.style.display = "block";
     container.innerHTML = "";
     const title = document.createElement("div");
     title.innerHTML = "<h5><b>Joker Prosecco</b></h5>";

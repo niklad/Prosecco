@@ -35,8 +35,36 @@ td { font-size: 15px }
     padding: 12px 15px;
 }
 
+.joker_prosecco_table{
+  /* margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%; */
+  width: 45%;
+  float: left;
+  margin-right: 5%;
+}
 
 
+.joker{
+  display: none;
+  margin-left: 40%;
+  margin-right: 40%; 
+  width: 20%;
+  margin-top: 5%;
+  border-width:3px; 
+  border-style:solid; 
+  border-color:#e3e6e9; 
+  border-radius: 25px;
+  padding-left:30px;
+  color: #222a38;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+};
+
+h5{
+  padding-top:10px;
+  padding-bottom:10px;
+}
 
 @media (max-width: 1199px) {
   #status {
@@ -49,32 +77,14 @@ td { font-size: 15px }
   }
 
   td { font-size: 10px }
-}
 
-.joker_prosecco_table{
-  /* margin-left: 15%;
-  margin-right: 15%;
-  margin-top: 5%; */
-  width: 45%;
-  float: left;
-  margin-right: 5%;
-}
+  .joker{ 
+    margin-left: 30%;
+    margin-right: 30%; 
+    width: 40%;
+  }
 
-
-.joker{
-  margin-left: 15%;
-  margin-right: 70%; 
-  margin-top: 5%;
-  border-width:3px; 
-  border-style:solid; 
-  border-color:#89a8b8; 
-  border-radius: 25px;
-  padding-left:30px;
-  color: #222a38;
-
-};
-
-h5{
-  padding-top:10px;
-  padding-bottom:10px;
+  td { font-size: 10px }
+  h5 { font-size: 14px }
+  span { font-size: 12px }
 }
