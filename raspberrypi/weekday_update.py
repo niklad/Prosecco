@@ -5,7 +5,7 @@ from utils.check_time import increment_prosecco
 from utils.constants import NO_SHOW_PENALTY
 
 
-def daily_update():
+def weekday_update():
     """Check if everyone in the database who do not have
     a registered absence_dates today have arrived.
     """
@@ -59,10 +59,10 @@ def send_acknowledgement(db: pyrebase, yesterday_date: str):
 
 def daily_update_was_done(db: pyrebase, yesterday_date: str):
     daily_update_status = db.child("daily_updates").child(yesterday_date).get().val()
-    if daily_update_status == "Done":
+    if (daily_update_status == "Done" or daily_update_status == "Weekend"):
         return True
     return False
 
 
 if __name__ == "__main__":
-    daily_update()
+    weekday_update()
