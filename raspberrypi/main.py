@@ -16,6 +16,7 @@ def main():
         try:
             turn_off_GPIO_pin(BLUE_LED_PIN)
             turn_on_GPIO_pin(GREEN_LED_PIN)
+
             id, arrival_time, departure_time = read_rfid(db)
             if id is None:
                 continue
@@ -25,11 +26,15 @@ def main():
                 give_random_processo(db, id)
         except KeyboardInterrupt:
             print("\nExiting...")
-            break
-        finally:
-            print("Program not running. Please reboot or contact Niklas.")
             turn_off_GPIO_pin(GREEN_LED_PIN)
             turn_on_GPIO_pin(BLUE_LED_PIN)
+            break
+        except Exception as e:
+            print("Program not running. Please reboot or contact Niklas.")
+            print(f"Error: {e}")
+            turn_off_GPIO_pin(GREEN_LED_PIN)
+            turn_on_GPIO_pin(BLUE_LED_PIN)
+            break
 
 
 if __name__ == "__main__":
