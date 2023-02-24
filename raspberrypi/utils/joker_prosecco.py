@@ -1,7 +1,14 @@
 import pyrebase
 import random
-from utils.check_time import increment_prosecco
 from utils.constants import JOKER_PROSECCO_PENALTY
+
+
+def increment_joker_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
+    # Increment the prosecco_mark variable in the database
+    joker_prosecco_marks = db.child("Users").child(id).child("joker_prosecco").get().val()
+    joker_prosecco_marks += penalty_points
+    db.child("Users").child(id).child("joker_prosecco").set(joker_prosecco_marks)
+    return
 
 
 def give_random_processo(db: pyrebase, id):
@@ -22,7 +29,7 @@ def give_random_processo(db: pyrebase, id):
 
     joker_proseco = random.randint(0, 100) <= 1
     if joker_proseco:
-        increment_prosecco(the_chosen_one_id, db, JOKER_PROSECCO_PENALTY)
+        increment_joker_prosecco(the_chosen_one_id, db, JOKER_PROSECCO_PENALTY)
         print(f"{the_chosen_one_name} got a Joker Prosecco!!!")
 
 

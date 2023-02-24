@@ -124,7 +124,7 @@ function Register_User() {
     } else {
       alert("Your ID has been registered!");
       var new_user_ref = usersRef.child('ID:' + m_ID_value);
-      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0, 'standard_time':{[yesterday_date]:'09:15'}});
+      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0,'joker_prosecco':0, 'standard_time':{[yesterday_date]:'09:15'}});
     }
   });
 }
