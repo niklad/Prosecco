@@ -25,12 +25,12 @@ def main():
             if departure_time is None:
                 give_random_processo(db, id)
         except KeyboardInterrupt:
-            print("\nExiting...")
+            print("\nBing bong")
             turn_off_GPIO_pin(GREEN_LED_PIN)
             turn_on_GPIO_pin(BLUE_LED_PIN)
             break
         except Exception as e:
-            print("Program not running. Please reboot or contact Niklas.")
+            print("Program not running. Please reboot or contact an adult.")
             print(f"Error: {e}")
             turn_off_GPIO_pin(GREEN_LED_PIN)
             turn_on_GPIO_pin(BLUE_LED_PIN)
