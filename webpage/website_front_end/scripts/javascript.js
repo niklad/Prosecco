@@ -184,10 +184,10 @@ dbRefObject.on('value', function(snapshot) {
     else if (user['arrival_times'] && user['arrival_times'][date]) {
         presence_status = 'Har kommet på sal';
     }
-    else if (user['arrival_times']) {
+    else {
         presence_status = 'Har ikke kommet på sal';
     }
-    if (presence_status == 'Har kommet på sal' || presence_status == 'Har ikke kommet på sal') {
+    if (presence_status == 'Har kommet på sal' || presence_status == 'Har dratt hjem') {
         if (user['arrival_times'][date] > todays_meeting_time) {
             presence_status = 'Kom for sent';
         }
