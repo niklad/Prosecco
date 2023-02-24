@@ -23,20 +23,22 @@ var m_ID = document.querySelector("#r_id");
 // Id-variabler til registrering av ny tid
 var t_username = document.querySelector("#mt_u");
 var t_pin = document.querySelector("#mt_p");
-var t_time = document.querySelector("#mt_t");
+var t_time = document.querySelector("#mt_button");
 
 // Id-variabler til registrering av ny standardtid
 var st_username = document.querySelector("#st_u");
 var st_pin = document.querySelector("#st_p");
-var st_time = document.querySelector("#st_t");
+var st_time = document.querySelector("#st_button");
 
 // Register ny standard  møtetid
 function Register_Standard_Time() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
 
-  st_username_value = st_username.value;
-  st_pin_value = st_pin.value;
+  // st_username_value = st_username.value;
+  st_username_value = localStorage.getItem("username");
+  // st_pin_value = st_pin.value;
+  st_pin_value = localStorage.getItem("pin");
   st_time_value = st_time.value;
 
   var date = Get_Date_Str();
@@ -47,6 +49,7 @@ function Register_Standard_Time() {
 
       if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
         usersRef.child(userSnapshot['key']).child('standard_time').update({[date]:String(st_time_value)});
+        alert("Ny standard møtetid er registrert!")
       }
     });
   });
@@ -57,8 +60,10 @@ function Register_Meeting_Time() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
 
-  t_username_value = t_username.value;
-  t_pin_value = t_pin.value;
+  // t_username_value = t_username.value;
+  t_username_value = localStorage.getItem("username");
+  // t_pin_value = t_pin.value;
+  t_pin_value = localStorage.getItem("pin");
   t_time_value = t_time.value;
 
   var TomorrowDateString = Get_Date_Tomorrow_Str();
@@ -73,6 +78,7 @@ function Register_Meeting_Time() {
           }
         }
         usersRef.child(userSnapshot['key'] + '/meeting_times').update({[TomorrowDateString]:String(t_time_value)});
+        alert("Ny møtetid for i morgen er registrert!")
       }
     });
   });
@@ -83,8 +89,10 @@ function Register_absence() {
   var database = firebase.database();
   var usersRef = database.ref('Users');
 
-  t_username_value = t_username.value;
-  t_pin_value = t_pin.value;
+  // t_username_value = t_username.value;
+  t_username_value = localStorage.getItem("username");
+  // t_pin_value = t_pin.value;
+  t_pin_value = localStorage.getItem("pin");
 
 
   var TomorrowDateString = Get_Date_Tomorrow_Str();
@@ -99,6 +107,7 @@ function Register_absence() {
         if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
 
           usersRef.child(userSnapshot['key'] + '/absence_dates').update({[TomorrowDateString]:TodaysDateString});
+          alert("Fravær er registrert!")
         }
       });
     });
@@ -188,9 +197,12 @@ dbRefObject.on('value', function(snapshot) {
         presence_status = 'Har ikke kommet på sal';
     }
     if (presence_status == 'Har kommet på sal' || presence_status == 'Har ikke kommet på sal') {
+      if (user['arrival_times']) {
         if (user['arrival_times'][date] > todays_meeting_time) {
-            presence_status = 'Kom for sent';
+          presence_status = 'Kom for sent';
         }
+      }
+        
     }
 
     data = {

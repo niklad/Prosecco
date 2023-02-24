@@ -42,7 +42,8 @@
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="standard_meeting_time.html" style="padding: 10px 42px;">Standard møtetid</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="memes.html" style="padding: 10px 42px;">Memes</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="regler.html" style="padding: 10px 42px;">Regler</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="registrer.html" style="padding: 10px 42px;">Register bruker</a>
+</li><li id="reg" class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="registrer.html" style="padding: 10px 42px;">Register bruker</a>
+</li><li class="u-nav-item"><button id="log_in_out" onclick="log_in_out()" disabled>Logg inn</button>
 </li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
@@ -54,7 +55,8 @@
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="standard_meeting_time.html">Standard møtetid</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="memes.html">Memes</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="regler.html">Regler</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="registrer.html">Register bruker</a>
+</li><li id="reg2" class="u-nav-item"><a class="u-button-style u-nav-link" href="registrer.html">Register bruker</a>
+</li><li class="u-nav-item"><button id="log_in_out_pad" onclick="log_in_out()" disabled>Logg inn</button>
 </li></ul>
               </div>
             </div>
@@ -67,17 +69,17 @@
         <h2 class="u-text u-text-default u-text-1">Registrer morgendagens møtetid</h2>
         <div class="u-form u-form-1">
           <form action="https://forms.nicepagesrv.com/v2/form/process" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
-            <div class="u-form-group u-form-name u-label-top">
+            <!-- <div class="u-form-group u-form-name u-label-top">
               <label for="mt_u" class="u-label">Navn</label>
               <input type="text" placeholder="Brage" id="mt_u" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-            </div>
-            <div class="u-form-email u-form-group u-label-top">
+            </div> -->
+            <!-- <div class="u-form-email u-form-group u-label-top">
               <label for="mt_p" class="u-label" maxlength="4">Pinkode</label>
               <input type="number" placeholder="1234" id="mt_p" name="email" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-            </div>
+            </div> -->
             <div class="u-form-group u-label-top u-form-group-3">
               <label for="mt_t" class="u-label">Ønsket møtetidspunkt</label>
-              <input type="time" placeholder="10:15" id="mt_t" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+              <input id="mt_button" type="time" placeholder="10:15" id="mt_t" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
             </div>
             <div class="u-align-left u-form-group u-form-submit u-label-top sub-form-group" id="register_button">
               <a href="#" class="u-btn u-btn-submit u-button-style" onclick="Register_Meeting_Time()" id="register">Registrer</a>
@@ -92,5 +94,12 @@
         </div>
       </div>
     </section>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>
     <script class="u-script" type="text/javascript" src="scripts/javascript.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="scripts/log_in_out.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="scripts/onload.js" defer=""></script>
+
 </body></html>
