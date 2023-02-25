@@ -6,15 +6,16 @@ from utils.constants import (
     VERY_LATE_LIMIT_HOURS,
     SAFING_LIMIT_MINUTES,
     MEETING_TIME_SECONDS,
-    GREEN_LED_PIN,
-    BLUE_LED_PIN,
+    RED,
+    GREEN,
+    BLUE,
     ON_TIME_NUMBER_OF_BLINKS,
     LATE_NUMBER_OF_BLINKS,
     VERY_LATE_NUMBER_OF_BLINKS,
     SAFING_NUMBER_OF_BLINKS,
     BLINK_DELAY,
 )
-from utils.gpio import blink_LED
+from utils.gpio import blink_LEDs
 
 
 def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
@@ -27,24 +28,24 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
 
     if user_is_safing(arrival_time, meeting_time):
         print("You are safing!")
-        blink_LED(BLUE_LED_PIN, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LEDs(RED, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db)
         return
 
     if user_is_very_late(arrival_time, meeting_time):
         print("You are very late!")
-        blink_LED(BLUE_LED_PIN, VERY_LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LEDs(RED, VERY_LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
         return
 
     if user_is_late(arrival_time, meeting_time):
         print("You are late!")
-        blink_LED(BLUE_LED_PIN, LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
+        blink_LEDs(RED, LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
         increment_prosecco(id, db, penalty_points=LATE_PENALTY)
         return
 
     print("You are on time!")
-    blink_LED(GREEN_LED_PIN, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
+    blink_LEDs(GREEN, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
     return
 
 
