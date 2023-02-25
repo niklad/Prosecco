@@ -12,3 +12,11 @@
 .letter_bullets{
   list-style-type: lower-alpha;
 }
+
+@media (max-width: 1199px) {
+  .hoved_tekst{
+    padding-top: 5%; 
+    padding-right: 5%;  
+    padding-left: 5%;
+  }
+}
