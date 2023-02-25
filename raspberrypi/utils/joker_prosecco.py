@@ -1,6 +1,7 @@
 import pyrebase
 import random
 from utils.constants import JOKER_PROSECCO_PENALTY
+from utils.check_time import day_is_weekend
 
 
 def increment_joker_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
@@ -16,6 +17,9 @@ def give_random_processo(db: pyrebase, id):
     - Everyday choose a random ID
     - Everyday choose a random number between 0-100 if number under 6 then give a Joker processo
     """
+    if day_is_weekend():
+        return
+
     id_list = list(db.child("Users").get().val().keys())
     id_list.remove(id)
     number_of_participants = len(id_list)
