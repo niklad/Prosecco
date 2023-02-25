@@ -3,10 +3,9 @@ from utils.read_rfid import read_rfid
 from utils.check_time import check_time
 from utils.joker_prosecco import give_random_processo
 from utils.gpio import (configure_GPIO_pins,
-                        turn_on_GPIO_pin,
-                        turn_off_GPIO_pin)
-from utils.constants import GREEN_LED_PIN, BLUE_LED_PIN
-
+                        turn_on_LEDs,
+                        turn_off_LEDs)
+from utils.constants import (RED, GREEN, BLUE)
 
 def main():
     configure_GPIO_pins()
@@ -14,8 +13,8 @@ def main():
 
     while True:
         try:
-            turn_off_GPIO_pin(BLUE_LED_PIN)
-            turn_on_GPIO_pin(GREEN_LED_PIN)
+            turn_off_LEDs()
+            turn_on_LEDs(GREEN)
 
             id, arrival_time, departure_time = read_rfid(db)
             if id is None:
@@ -26,14 +25,14 @@ def main():
                 give_random_processo(db, id)
         except KeyboardInterrupt:
             print("\nBing bong")
-            turn_off_GPIO_pin(GREEN_LED_PIN)
-            turn_on_GPIO_pin(BLUE_LED_PIN)
+            turn_off_LEDs()
+            turn_on_LEDs(RED)
             break
         except Exception as e:
             print("Program not running. Please reboot or contact an adult.")
             print(f"Error: {e}")
-            turn_off_GPIO_pin(GREEN_LED_PIN)
-            turn_on_GPIO_pin(BLUE_LED_PIN)
+            turn_off_LEDs()
+            turn_on_LEDs(RED)
             break
 
 
