@@ -2,4 +2,4 @@
 p r o s e c c
 
 ## what
-https://folk.ntnu.no/bragegsa/
+https://nettsidev1-76f5e.web.app/
