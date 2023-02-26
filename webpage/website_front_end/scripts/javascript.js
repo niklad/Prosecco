@@ -184,23 +184,24 @@ dbRefObject.on('value', function(snapshot) {
 
     // Set presence status
     if (user['absence_dates'] && user['absence_dates'][date]) {
-        // Leave status field empty
-        presence_status = '';
+      // Leave status field empty
+      presence_status = '';
     }
     else if (user['departure_times'] && user['departure_times'][date]) {
-        presence_status = 'Har dratt hjem';
+      presence_status = 'Har dratt hjem';
     }
     else if (user['arrival_times'] && user['arrival_times'][date]) {
-        presence_status = 'Har kommet på sal';
+      presence_status = 'Har kommet på sal';
     }
     else {
-        presence_status = 'Har ikke kommet på sal';
+      presence_status = 'Har ikke kommet på sal';
     }
+    // Update status to include "kom for sent" if user was late
     if (presence_status == 'Har kommet på sal' || presence_status == 'Har dratt hjem') {
-        if (user['arrival_times'][date] > todays_meeting_time) {
-          presence_status = 'Kom for sent';
-        }
+      if (user['arrival_times'][date] > todays_meeting_time) {
+          presence_status = presence_status + ', kom for sent';
       }
+    }
 
     data = {
       'name': user['name'],
