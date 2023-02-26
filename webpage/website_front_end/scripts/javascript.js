@@ -43,12 +43,12 @@ function Register_Standard_Time() {
 
   var date = Get_Date_Str();
 
-  usersRef.once('value', function(snapshot) {
-    snapshot.forEach(function(userSnapshot) {
+  usersRef.once('value', function (snapshot) {
+    snapshot.forEach(function (userSnapshot) {
       var user = userSnapshot.val();
 
       if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
-        usersRef.child(userSnapshot['key']).child('standard_time').update({[date]:String(st_time_value)});
+        usersRef.child(userSnapshot['key']).child('standard_time').update({ [date]: String(st_time_value) });
         alert("Ny standard møtetid er registrert!")
       }
     });
@@ -68,16 +68,16 @@ function Register_Meeting_Time() {
 
   var TomorrowDateString = Get_Date_Tomorrow_Str();
 
-  usersRef.once('value', function(snapshot) {
-    snapshot.forEach(function(userSnapshot) {
+  usersRef.once('value', function (snapshot) {
+    snapshot.forEach(function (userSnapshot) {
       var user = userSnapshot.val();
       if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
         if (user['absence_dates']) {
-          if (user['absence_dates'][TomorrowDateString]){
+          if (user['absence_dates'][TomorrowDateString]) {
             usersRef.child(userSnapshot['key'] + '/absence_dates/' + TomorrowDateString).remove()
           }
         }
-        usersRef.child(userSnapshot['key'] + '/meeting_times').update({[TomorrowDateString]:String(t_time_value)});
+        usersRef.child(userSnapshot['key'] + '/meeting_times').update({ [TomorrowDateString]: String(t_time_value) });
         alert("Ny møtetid for i morgen er registrert!")
       }
     });
@@ -101,12 +101,12 @@ function Register_absence() {
 
   if (confirm('Er du sikker på at du vil melde fravær i morgen?')) {
 
-    usersRef.once('value', function(snapshot) {
-      snapshot.forEach(function(userSnapshot) {
+    usersRef.once('value', function (snapshot) {
+      snapshot.forEach(function (userSnapshot) {
         var user = userSnapshot.val();
         if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
 
-          usersRef.child(userSnapshot['key'] + '/absence_dates').update({[TomorrowDateString]:TodaysDateString});
+          usersRef.child(userSnapshot['key'] + '/absence_dates').update({ [TomorrowDateString]: TodaysDateString });
           alert("Fravær er registrert!")
         }
       });
@@ -127,24 +127,24 @@ function Register_User() {
   m_ID_value = m_ID.value;
   var yesterday_date = Get_Date_Yesterday_Str();
 
-  mIDRef.once('value', function(snapshot) {
+  mIDRef.once('value', function (snapshot) {
     if (snapshot.exists()) {
       alert("Your ID has already been registered!");
     } else {
       alert("Your ID has been registered!");
       var new_user_ref = usersRef.child('ID:' + m_ID_value);
-      new_user_ref.set({'name':r_username_value, 'pin':r_pin_value, 'prosecco_marks':0,'joker_prosecco':0, 'standard_time':{[yesterday_date]:'09:15'}});
+      new_user_ref.set({ 'name': r_username_value, 'pin': r_pin_value, 'prosecco_marks': 0, 'joker_prosecco': 0, 'standard_time': { [yesterday_date]: '09:15' } });
     }
   });
 }
 
 // Oppdater tabell
-dbRefObject.on('value', function(snapshot) {
+dbRefObject.on('value', function (snapshot) {
 
   reset_tab();
   tab_info = [];
 
-  snapshot.forEach(function(userSnapshot) {
+  snapshot.forEach(function (userSnapshot) {
     var key = userSnapshot['key'];
     var user = userSnapshot.val();
 
@@ -184,23 +184,24 @@ dbRefObject.on('value', function(snapshot) {
 
     // Set presence status
     if (user['absence_dates'] && user['absence_dates'][date]) {
-        // Leave status field empty
-        presence_status = '';
+      // Leave status field empty
+      presence_status = '';
     }
     else if (user['departure_times'] && user['departure_times'][date]) {
-        presence_status = 'Har dratt hjem';
+      presence_status = 'Har dratt hjem';
     }
     else if (user['arrival_times'] && user['arrival_times'][date]) {
-        presence_status = 'Har kommet på sal';
+      presence_status = 'Har kommet på sal';
     }
     else {
-        presence_status = 'Har ikke kommet på sal';
+      presence_status = 'Har ikke kommet på sal';
     }
+    // Update status to include "kom for sent" if user was late
     if (presence_status == 'Har kommet på sal' || presence_status == 'Har dratt hjem') {
-        if (user['arrival_times'][date] > todays_meeting_time) {
-          presence_status = 'Kom for sent';
-        }
+      if (user['arrival_times'][date] > todays_meeting_time) {
+        presence_status = presence_status + ', kom for sent';
       }
+    }
 
     data = {
       'name': user['name'],
@@ -214,8 +215,8 @@ dbRefObject.on('value', function(snapshot) {
   });
 
 
-  tab_info.sort(function(a, b){
-    return a.prosecco_marks-b.prosecco_marks
+  tab_info.sort(function (a, b) {
+    return a.prosecco_marks - b.prosecco_marks
   })
 
   tab_info.reverse();
