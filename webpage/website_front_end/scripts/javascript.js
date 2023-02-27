@@ -148,18 +148,18 @@ dbRefObject.on('value', function (snapshot) {
     var key = userSnapshot['key'];
     var user = userSnapshot.val();
 
-    var date = Get_Date_Str();
+    var date_today = Get_Date_Str();
     var date_tomorrow = Get_Date_Tomorrow_Str();
     var presence_status;
     var todays_meeting_time;
     var tomorrow_meeting_time;
 
-    var todays_standard_time = get_standard_time(user, date);
+    var todays_standard_time = get_standard_time(user, date_today);
     var tomorrows_standard_time = get_standard_time(user, date_tomorrow);
 
     if (user['meeting_times']) {
-      if (user['meeting_times'][date]) {
-        todays_meeting_time = user['meeting_times'][date];
+      if (user['meeting_times'][date_today]) {
+        todays_meeting_time = user['meeting_times'][date_today];
       } else {
         todays_meeting_time = todays_standard_time;
       }
@@ -174,7 +174,7 @@ dbRefObject.on('value', function (snapshot) {
     }
 
     if (user['absence_dates']) {
-      if (user['absence_dates'][date]) {
+      if (user['absence_dates'][date_today]) {
         todays_meeting_time = 'Meldt fravær'
       }
       if (user['absence_dates'][date_tomorrow]) {
@@ -183,22 +183,22 @@ dbRefObject.on('value', function (snapshot) {
     }
 
     // Set presence status
-    if (user['absence_dates'] && user['absence_dates'][date]) {
+    if (user['absence_dates'] && user['absence_dates'][date_today]) {
       // Leave status field empty
       presence_status = '';
     }
-    else if (user['departure_times'] && user['departure_times'][date]) {
+    else if (user['departure_times'] && user['departure_times'][date_today]) {
       presence_status = 'Har dratt hjem';
     }
-    else if (user['arrival_times'] && user['arrival_times'][date]) {
-      presence_status = 'Kom på sal kl. ' + user['arrival_times'][date];
+    else if (user['arrival_times'] && user['arrival_times'][date_today]) {
+      presence_status = 'Kom på sal kl. ' + user['arrival_times'][date_today];
     }
     else {
       presence_status = 'Har ikke kommet på sal';
     }
     // Update status to include "kom for sent" if user was late
     if (presence_status == 'Har kommet på sal' || presence_status == 'Har dratt hjem') {
-      if (user['arrival_times'][date] > todays_meeting_time) {
+      if (user['arrival_times'][date_today] > todays_meeting_time) {
         presence_status = presence_status + ', kom for sent';
       }
     }
