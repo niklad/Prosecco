@@ -1,8 +1,6 @@
 import pyrebase
 from datetime import datetime, timedelta
 from utils.firebase_setup import firebase_setup
-from utils.check_time import increment_prosecco
-from utils.constants import NO_SHOW_PENALTY
 from weekday_update import daily_update_was_done
 
 
@@ -16,6 +14,7 @@ def weekend_update():
 
     if daily_update_was_done(db, yesterday_date):
         return
+    send_acknowledgement(db, yesterday_date)
 
     return f"{yesterday_date}: Weekend update done"
 
