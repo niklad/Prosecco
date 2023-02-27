@@ -191,7 +191,7 @@ dbRefObject.on('value', function (snapshot) {
       presence_status = 'Har dratt hjem';
     }
     else if (user['arrival_times'] && user['arrival_times'][date]) {
-      presence_status = 'Har kommet på sal';
+      presence_status = 'Kom på sal kl. ' + user['arrival_times'][date];
     }
     else {
       presence_status = 'Har ikke kommet på sal';
