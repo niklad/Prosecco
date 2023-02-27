@@ -18,5 +18,5 @@ SAFING_NUMBER_OF_BLINKS = 3
 NUMBER_OF_LEDS = 8
 
 # Set time limits
-SAFING_LIMIT_MINUTES = 30
+SAFING_LIMIT_MINUTES = 45
 MEETING_TIME_SECONDS = "59"  # Set to 59 for allowing arrivals within the minute

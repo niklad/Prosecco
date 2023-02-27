@@ -5,7 +5,8 @@ from utils.joker_prosecco import give_random_processo
 from utils.gpio import (configure_GPIO_pins,
                         turn_on_LEDs,
                         turn_off_LEDs)
-from utils.constants import (RED, GREEN, BLUE)
+from utils.constants import (RED, GREEN)
+
 
 def main():
     configure_GPIO_pins()
