@@ -183,6 +183,7 @@ dbRefObject.on('value', function (snapshot) {
     }
 
     // Set presence status
+        presence_status_before_time = ''; // Workaround to get into if statement later
     if (user['absence_dates'] && user['absence_dates'][date_today]) {
       // Leave status field empty
       presence_status = '';
@@ -191,15 +192,16 @@ dbRefObject.on('value', function (snapshot) {
       presence_status = 'Har dratt hjem';
     }
     else if (user['arrival_times'] && user['arrival_times'][date_today]) {
-      presence_status = 'Kom på sal kl. ' + user['arrival_times'][date_today];
+            presence_status_before_time = 'Kom på sal kl. '
+            presence_status = presence_status_before_time + user['arrival_times'][date_today];
     }
     else {
       presence_status = 'Har ikke kommet på sal';
     }
     // Update status to include "kom for sent" if user was late
-    if (presence_status == 'Har kommet på sal' || presence_status == 'Har dratt hjem') {
+        if (presence_status_before_time == 'Kom på sal kl. ' || presence_status == 'Har dratt hjem') {
       if (user['arrival_times'][date_today] > todays_meeting_time) {
-        presence_status = presence_status + ', kom for sent';
+                presence_status = presence_status + ', kom for sent!';
       }
     }
 
