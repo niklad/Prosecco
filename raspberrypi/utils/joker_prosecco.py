@@ -12,7 +12,7 @@ def increment_joker_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
     return
 
 
-def give_random_processo(db: pyrebase, id):
+def give_random_processo(db: pyrebase, id: str):
     """
     - Everyday choose a random ID
     - Everyday choose a random number between 0-100 if number under 6 then give a Joker processo
