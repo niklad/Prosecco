@@ -17,8 +17,8 @@ def firebase_setup():
         "serviceAccount": json_path,
     }
     firebase = pyrebase.initialize_app(config)
-    db = firebase.database()
-    return db
+    database = firebase.database()
+    return database
 
 
 if __name__ == "__main__":

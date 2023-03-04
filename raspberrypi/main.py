@@ -1,29 +1,38 @@
 from utils.firebase_setup import firebase_setup
 from utils.read_rfid import read_rfid
-from utils.check_time import check_time
+from utils.check_time import check_time, day_is_weekend
 from utils.joker_prosecco import give_random_processo
-from utils.gpio import (configure_GPIO_pins,
+from utils.gpio import (blink_LEDs,
+                        configure_GPIO_pins,
                         turn_on_LEDs,
                         turn_off_LEDs)
-from utils.constants import (RED, GREEN)
+from utils.constants import (BLINK_DELAY,
+                             ON_TIME_NUMBER_OF_BLINKS,
+                             BLUE,
+                             RED,
+                             GREEN)
 
 
 def main():
     configure_GPIO_pins()
-    db = firebase_setup()
+    database = firebase_setup()
 
     while True:
         try:
             turn_off_LEDs()
             turn_on_LEDs(GREEN)
 
-            id, arrival_time, departure_time = read_rfid(db)
+            id, arrival_time, departure_time = read_rfid(database)
             if id is None:
                 continue
-            check_time(id, arrival_time, departure_time, db)
+            if day_is_weekend():
+                print("It's the weekend!")
+                blink_LEDs(BLUE, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
+                continue
+            check_time(id, arrival_time, departure_time, database)
             # Give joker prosecco upon arrival only
             if departure_time is None:
-                give_random_processo(db, id)
+                give_random_processo(database, id)
         except KeyboardInterrupt:
             print("\nBing bong")
             turn_off_LEDs()

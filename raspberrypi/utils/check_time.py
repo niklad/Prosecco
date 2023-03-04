@@ -18,35 +18,30 @@ from utils.constants import (
 from utils.gpio import blink_LEDs
 
 
-def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
+def check_time(id: str, arrival_time: str, departure_time: str, database: pyrebase):
     # Return if the departure time is registred
     if departure_time is not None:
         return
 
-    if day_is_weekend():
-        print("It's the weekend!")
-        blink_LEDs(BLUE, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
-        return
-
     # Check if there is a meeting time set for today
-    meeting_time = get_meeting_time(id, db)
+    meeting_time = get_meeting_time(id, database)
 
     if user_is_safing(arrival_time, meeting_time):
         print("You are safing!")
         blink_LEDs(RED, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
-        increment_prosecco(id, db)
+        increment_prosecco(id, database)
         return
 
     if user_is_very_late(arrival_time, meeting_time):
         print("You are very late!")
         blink_LEDs(RED, VERY_LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
-        increment_prosecco(id, db, penalty_points=VERY_LATE_PENALTY)
+        increment_prosecco(id, database, penalty_points=VERY_LATE_PENALTY)
         return
 
     if user_is_late(arrival_time, meeting_time):
         print("You are late!")
         blink_LEDs(RED, LATE_NUMBER_OF_BLINKS, BLINK_DELAY)
-        increment_prosecco(id, db, penalty_points=LATE_PENALTY)
+        increment_prosecco(id, database, penalty_points=LATE_PENALTY)
         return
 
     print("You are on time!")
@@ -54,12 +49,12 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
     return
 
 
-def get_meeting_time(id: str, db: pyrebase):
+def get_meeting_time(id: str, database: pyrebase):
     today = datetime.today()
     current_date = today.strftime("%Y-%m-%d")
 
     meeting_time = (
-        db.child("Users")
+        database.child("Users")
         .child(id)
         .child("meeting_times")
         .child(current_date)
@@ -68,7 +63,7 @@ def get_meeting_time(id: str, db: pyrebase):
     )
     if meeting_time is None:
         # Get the standard times from the standard_time node in the database
-        standard_times = db.child("Users").child(
+        standard_times = database.child("Users").child(
             id).child("standard_time").get().val()
         # If the last standard time in the standard_times dictionary was set today, use the second to last one
         if (
@@ -118,12 +113,12 @@ def day_is_weekend():
     return False
 
 
-def increment_prosecco(id: str, db: pyrebase, penalty_points: int = 1):
+def increment_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
-    prosecco_marks = db.child("Users").child(
+    prosecco_marks = database.child("Users").child(
         id).child("prosecco_marks").get().val()
     prosecco_marks += penalty_points
-    db.child("Users").child(id).child("prosecco_marks").set(prosecco_marks)
+    database.child("Users").child(id).child("prosecco_marks").set(prosecco_marks)
     return
 
 
