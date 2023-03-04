@@ -17,9 +17,6 @@ def give_random_processo(db: pyrebase, id: str):
     - Everyday choose a random ID
     - Everyday choose a random number between 0-100 if number under 6 then give a Joker processo
     """
-    if day_is_weekend():
-        return
-
     id_list = list(db.child("Users").get().val().keys())
     id_list.remove(id)
     number_of_participants = len(id_list)

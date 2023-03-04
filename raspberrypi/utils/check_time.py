@@ -23,11 +23,6 @@ def check_time(id: str, arrival_time: str, departure_time: str, db: pyrebase):
     if departure_time is not None:
         return
 
-    if day_is_weekend():
-        print("It's the weekend!")
-        blink_LEDs(BLUE, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
-        return
-
     # Check if there is a meeting time set for today
     meeting_time = get_meeting_time(id, db)
 
