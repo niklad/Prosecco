@@ -15,23 +15,24 @@ from utils.constants import (BLINK_DELAY,
 
 def main():
     configure_GPIO_pins()
-    db = firebase_setup()
+    database = firebase_setup()
 
     while True:
         try:
             turn_off_LEDs()
             turn_on_LEDs(GREEN)
 
-            id, arrival_time, departure_time = read_rfid(db)
+            id, arrival_time, departure_time = read_rfid(database)
             if id is None:
                 continue
             if day_is_weekend():
                 print("It's the weekend!")
                 blink_LEDs(BLUE, ON_TIME_NUMBER_OF_BLINKS, BLINK_DELAY)
                 continue
+            check_time(id, arrival_time, departure_time, database)
             # Give joker prosecco upon arrival only
             if departure_time is None:
-                give_random_processo(db, id)
+                give_random_processo(database, id)
         except KeyboardInterrupt:
             print("\nBing bong")
             turn_off_LEDs()

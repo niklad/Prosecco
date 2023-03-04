@@ -6,21 +6,21 @@ from weekday_update import daily_update_was_done
 
 def weekend_update():
     """Write "Weekend" to the database if it is the weekend"""
-    db = firebase_setup()
+    database = firebase_setup()
     today = datetime.today()
     # Yesterday's date
     yesterday = today - timedelta(days=1)
     yesterday_date = yesterday.strftime("%Y-%m-%d")
 
-    if daily_update_was_done(db, yesterday_date):
+    if daily_update_was_done(database, yesterday_date):
         return
-    send_acknowledgement(db, yesterday_date)
+    send_acknowledgement(database, yesterday_date)
 
     return f"{yesterday_date}: Weekend update done"
 
 
-def send_acknowledgement(db: pyrebase, yesterday_date: str):
-    db.child("daily_updates").child(yesterday_date).set("Weekend")
+def send_acknowledgement(database: pyrebase, yesterday_date: str):
+    database.child("daily_updates").child(yesterday_date).set("Weekend")
 
 
 if __name__ == "__main__":
