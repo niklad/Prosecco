@@ -1,3 +1,87 @@
+body {
+  margin: 10;
+  box-sizing: border-box;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.header .logo {
+  font-size: 25px;
+  font-family: sans-serif; 
+  color: #000;
+  text-decoration: none;
+  margin-left: 30px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: relative;
+  align-items: center;
+  width: 100%;
+  height: 420px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(images/proseccobakgrunn.jpg);
+  background-size: cover;
+  background-position: relative;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 10px;
+}
+
+.intro h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 60px;
+  color: #fff;
+  font-weight:600;
+  text-transform: uppercase;
+  text-shadow: 0px 20px 20px #000000;
+  margin: 10;
+  margin-top: 8%;
+}
+
+.intro p {
+  font-size: 20px;
+  color: #d1d1d1;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 20px 0;
+}
+.intro k {
+  font-size: 20px;
+  color: #d1d1d1;
+  font-style: italic;
+  text-transform: lowercase;
+}
+
+.intro button {
+  background-color: #a7b7a8;
+  color: #000;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4)
+}
+
+.nav-items {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f5f5f5;
+  margin-right: 20px;
+}
+
+.nav-items a {
+  text-decoration: none;
+  color: #000;
+  padding: 35px 20px;
+}
 .u-section-1 .u-sheet-1 {
   min-height: 400px;
 }
@@ -22,12 +106,13 @@ td, th {
   overflow: hidden;
   text-align: left;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
-
-tr:nth-child(odd) {background-color: #e3e6e9;}
-tr:nth-child(even) {background-color: #ffffff;}
-tr:hover {background-color: rgb(203, 207, 209);}
+tr:nth-child(odd) {background-color: #89ac85;}
+tr:nth-child(even) {background-color: #89AC85;}
+tr:hover {background-color:  #E77D26;}
+tr:first-child{background-color: #6f8f6b;}
 td { font-size: 15px }
 
 .stats th,
@@ -36,9 +121,6 @@ td { font-size: 15px }
 }
 
 .joker_prosecco_table{
-  /* margin-left: 15%;
-  margin-right: 15%;
-  margin-top: 5%; */
   width: 45%;
   float: left;
   margin-right: 5%;
@@ -49,8 +131,8 @@ td { font-size: 15px }
   display: none;
   margin-left: 40%;
   margin-right: 40%; 
-  width: 20%;
-  margin-top: 5%;
+  width: 70%;
+  margin-top: 3%;
   border-width:3px; 
   border-style:solid; 
   border-color:#e3e6e9; 
@@ -58,8 +140,7 @@ td { font-size: 15px }
   padding-left:30px;
   color: #222a38;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  display: none;
-
+  position: relative;
 };
 
 h5{
@@ -88,4 +169,20 @@ h5{
   td { font-size: 10px }
   h5 { font-size: 14px }
   span { font-size: 12px }
+}
+
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 80px;
+  margin-top: 50px;
+  background-color: #222a38;
+}
+
+.footer .copy {
+  color: #fff;
 }
