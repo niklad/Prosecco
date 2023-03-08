@@ -201,7 +201,7 @@ dbRefObject.on('value', function (snapshot) {
         // Update status to include "kom for sent" if user was late
         if (presence_status_before_time == 'Kom på sal kl. ' || presence_status == 'Har dratt hjem') {
             if (user['arrival_times'][date_today] > (todays_meeting_time + ':59')) {
-                presence_status = '<span style="color: #FF0000;">' + presence_status + '</span>';
+                presence_status = '<span style="color: #FF0000; font-weight: bold;">' + presence_status + '</span>';
             }
         }
 
