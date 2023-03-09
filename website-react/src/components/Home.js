@@ -1,24 +1,9 @@
 import React, { useState } from 'react';
-import { initializeApp } from "firebase/app";
-import firebase from "firebase/app";
-import "firebase/database";
+import { db } from "../utils/firebase";
+import { onValue, ref } from "firebase/database";
 
 
-// TODO: Replace the following with your app's Firebase project configuration
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_APIKEY,
-    authDomain: process.env.REACT_APP_AUTHDOMAIN,
-    databaseURL: process.env.REACT_APP_DATABASEURL,
-    projectId: process.env.REACT_APP_PROJECTID,
-    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID,
-    measurementId: process.env.REACT_APP_MEASUREMENTID
-};
-
-const app = initializeApp(firebaseConfig);
-const dbRefObject = app.database().ref('Users')
-
+const dbRefObject = ref(db, "Users");
 // Id-letiabler til registrering av brukere
 let username = document.querySelector("#r_u");
 let pin = document.querySelector("#r_p");
@@ -36,7 +21,7 @@ let st_time = document.querySelector("#st_button");
 
 
 // Oppdater tabell
-dbRefObject.on('value', function (snapshot) {
+onValue(dbRefObject, function (snapshot) {
 
   reset_tab();
   let tab_info = [];
@@ -221,13 +206,10 @@ function get_standard_time(user, date) {
 
 
 function Home() {
-    // Generate the table
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Prosecco status</h1>
-                <p>Her kan du se status på alle som har drukket prosecco</p>
-                <button onClick={reset_tab}>Oppdater</button>
+                <h1></h1>
                 <table id="status">
                 </table>
             </header>

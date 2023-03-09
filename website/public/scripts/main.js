@@ -13,7 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-const dbRefObject = firebase.database().ref('Users')
+const dbRefObject = firebase.database().ref('/Users/')
 
 // Id-variabler til registrering av brukere
 let username = document.querySelector("#r_u");

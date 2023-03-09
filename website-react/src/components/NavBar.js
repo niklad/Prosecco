@@ -5,7 +5,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavigationBar() {
   return (
-    <Navbar bg="light" expand="lg">
+    // Make navbar have height of 100px
+    <Navbar sticky="top" bg="light" expand="lg" style={{ height: '70px' }}>
       <Container>
         <Navbar.Brand href="/Home">Hjem</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,0 +1,129 @@
+.App {
+    /* Center elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    /* Make tha app fill the page in height*/
+    min-height: 100vh;
+    /* Add padding above */
+    padding-top: 100px;
+    /* Set background color */
+    background-color: #282c34;
+}
+
+.u-section-1 .u-sheet-1 {
+    min-height: 400px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border: none;
+    padding: 10px;
+}
+
+
+.stats {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+    border: 1px solid;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+
+tr:nth-child(odd) {
+    background-color: #e3e6e9;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+tr:hover {
+    background-color: rgb(203, 207, 209);
+}
+
+td {
+    font-size: 15px
+}
+
+.stats th,
+.stats td {
+    padding: 12px 15px;
+}
+
+.joker_prosecco_table {
+    /* margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%; */
+    width: 45%;
+    float: left;
+    margin-right: 5%;
+}
+
+
+.joker {
+    display: none;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    margin-top: 5%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #e3e6e9;
+    border-radius: 25px;
+    padding-left: 30px;
+    color: #222a38;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    display: none;
+
+}
+
+;
+
+h5 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 1199px) {
+    #status {
+        width: 99%;
+        margin-left: 0.5%;
+        margin-right: 0%;
+        margin-top: 5%;
+        border: 0px solid;
+        border-collapse: collapse;
+    }
+
+    td {
+        font-size: 10px
+    }
+
+    .joker {
+        margin-left: 30%;
+        margin-right: 30%;
+        width: 40%;
+    }
+
+    td {
+        font-size: 10px
+    }
+
+    h5 {
+        font-size: 14px
+    }
+
+    span {
+        font-size: 12px
+    }
+}
