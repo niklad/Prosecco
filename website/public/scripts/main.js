@@ -208,6 +208,7 @@ dbRefObject.on('value', function (snapshot) {
         data = {
             'name': user['name'],
             'prosecco_marks': user['prosecco_marks'],
+            'joker_prosecco': user['joker_prosecco'],
             'meeting_time': todays_meeting_time,
             'tomorrow_meeting_time': tomorrow_meeting_time,
             'status': presence_status
@@ -224,9 +225,7 @@ dbRefObject.on('value', function (snapshot) {
     tab_info.reverse();
 
     for (let i = 0; i < tab_info.length; i++) {
-
         var tableRow = document.getElementById("status");
-
         var row = tableRow.insertRow(-1);
         var name_cell1 = row.insertCell(0);
         var p_mark_cell = row.insertCell(1);
@@ -235,12 +234,23 @@ dbRefObject.on('value', function (snapshot) {
         var status_cell = row.insertCell(4);
 
         name_cell1.innerHTML = tab_info[i]['name'];
-        p_mark_cell.innerHTML = tab_info[i]['prosecco_marks'];
         meeting_time_cell.innerHTML = tab_info[i]['meeting_time'];
         tomorrow_meeting_time_cell.innerHTML = tab_info[i]['tomorrow_meeting_time'];
         status_cell.innerHTML = tab_info[i]['status'];
+        p_mark_cell.innerHTML += tab_info[i]['prosecco_marks'];
+        p_mark_cell.innerHTML += ' ';
 
+        var joker_prosecco = tab_info[i]['joker_prosecco'];
+        for (var j = 0; j < joker_prosecco; j++) {
+            var image = document.createElement("img");
+            image.setAttribute("src", "./images/transparent-goblin.png");
+            image.setAttribute("width", "12");
+            p_mark_cell.appendChild(image);
+        }
     }
+
+
+
 });
 
 function reset_tab() {
