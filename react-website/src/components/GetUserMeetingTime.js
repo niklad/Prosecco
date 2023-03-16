@@ -1,11 +1,14 @@
-function GetUserMeetingTime(user, dateToday) {
-    if (user['absence_dates'] && user['absence_dates'][dateToday]) {
+import GetUserStandardTime from './GetUserStandardTime';
+
+
+function GetUserMeetingTime(user, date) {
+    if (user['absence_dates'] && user['absence_dates'][date]) {
         return 'Meldt fravær';
     }
-    if (user['meeting_times'] && user['meeting_times'][dateToday]) {
-        return user['meeting_times'][dateToday];
+    if (user['meeting_times'] && user['meeting_times'][date]) {
+        return user['meeting_times'][date];
     }
-    return user['standard_time'][dateToday];
+    return GetUserStandardTime(user, date);
 }
 
 export default GetUserMeetingTime

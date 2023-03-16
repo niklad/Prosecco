@@ -4,6 +4,7 @@ import { onValue, ref } from "firebase/database";
 import GetTodaysDate from "./GetTodaysDate";
 import GetTomorrowsDate from "./GetTomorrowsDate";
 import GetUserStatus from "./GetUserStatus"
+import GetUserMeetingTime from "./GetUserMeetingTime"
 
 import '../styles/MainTable.css';
 
@@ -13,28 +14,26 @@ function MainTable() {
 
     useEffect(() => {
         const usersRef = ref(database, "Users");
-
         onValue(usersRef, (snapshot) => {
             const data = [];
-
             snapshot.forEach((childSnapshot) => {
                 const childData = childSnapshot.val();
                 data.push(childData);
             });
-
+            data.sort((a, b) => b.prosecco_marks - a.prosecco_marks); // Sort by "Antall streker"
             setTableData(data);
         });
     }, []);
 
-    const todaysDate = GetTodaysDate();
-    const tomorrowsDate = GetTomorrowsDate();
+    const dateToday = GetTodaysDate();
+    const dateTomorrow = GetTomorrowsDate();
 
     return (
         <table>
             <thead>
                 <tr>
                     <th>Navn</th>
-                    <th>Antalll proseccosetreker</th>
+                    <th>Antall streker</th>
                     <th>Dagens møtetid</th>
                     <th>Morgendagens møtetid</th>
                     <th>Status</th>
@@ -45,8 +44,9 @@ function MainTable() {
                     <tr key={user.name}>
                         <td>{user.name}</td>
                         <td>{user.prosecco_marks}</td>
-                        <td>{user.meeting_times[todaysDate]}</td>
-                        <td>{user.meeting_times[tomorrowsDate]}</td>
+                        <td>{GetUserMeetingTime(user, dateToday)}</td>
+                        <td>{GetUserMeetingTime(user, dateTomorrow)}</td>
+                        <td>{GetUserStatus(user, dateToday)}</td>
                     </tr>
                 ))}
             </tbody>
