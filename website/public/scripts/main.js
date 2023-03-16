@@ -8,123 +8,99 @@ const firebaseConfig = {
     appId: "1:700326365934:web:5c80d4382e10c4869081ff",
     measurementId: "G-E6NXQ9K343"
 };
-
-
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
-const dbRefObject = firebase.database().ref('Users')
 
 // Id-variabler til registrering av brukere
 let username = document.querySelector("#r_u");
 let pin = document.querySelector("#r_p");
 let m_ID = document.querySelector("#r_id");
-
 // Id-variabler til registrering av ny tid
-let t_username = document.querySelector("#mt_u");
-let t_pin = document.querySelector("#mt_p");
 let t_time = document.querySelector("#mt_button");
-
 // Id-variabler til registrering av ny standardtid
-let st_username = document.querySelector("#st_u");
-let st_pin = document.querySelector("#st_p");
 let st_time = document.querySelector("#st_button");
 
-// Register ny standard  møtetid
+
 function register_standard_time() {
     let database = firebase.database();
-    let usersRef = database.ref('Users');
+    let users_ref = database.ref('Users');
 
-    // st_username_value = st_username.value;
     st_username_value = localStorage.getItem("username");
-    // st_pin_value = st_pin.value;
     st_pin_value = localStorage.getItem("pin");
     st_time_value = st_time.value;
 
     let date = get_date_string();
 
-    usersRef.once('value', function (snapshot) {
+    users_ref.once('value', function (snapshot) {
         snapshot.forEach(function (userSnapshot) {
             let user = userSnapshot.val();
 
             if (user['name'] === st_username_value && user['pin'] == st_pin_value) {
-                usersRef.child(userSnapshot['key']).child('standard_time').update({ [date]: String(st_time_value) });
+                users_ref.child(userSnapshot['key']).child('standard_time').update({ [date]: String(st_time_value) });
                 alert("Ny standard møtetid er registrert!")
             }
         });
     });
 }
 
-// Register ny møtetid
+
 function register_meeting_time() {
     let database = firebase.database();
     let usersRef = database.ref('Users');
-
-    // t_username_value = t_username.value;
-    t_username_value = localStorage.getItem("username");
-    // t_pin_value = t_pin.value;
-    t_pin_value = localStorage.getItem("pin");
-    t_time_value = t_time.value;
-
-    let TomorrowDateString = get_date_tomorrow_string();
+    let t_username_value = localStorage.getItem("username");
+    let t_pin_value = localStorage.getItem("pin");
+    let t_time_value = t_time.value;
+    let tomorrow_date_string = get_date_tomorrow_string();
 
     usersRef.once('value', function (snapshot) {
         snapshot.forEach(function (userSnapshot) {
             let user = userSnapshot.val();
             if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
                 if (user['absence_dates']) {
-                    if (user['absence_dates'][TomorrowDateString]) {
-                        usersRef.child(userSnapshot['key'] + '/absence_dates/' + TomorrowDateString).remove()
+                    if (user['absence_dates'][tomorrow_date_string]) {
+                        usersRef.child(userSnapshot['key'] + '/absence_dates/' + tomorrow_date_string).remove()
                     }
                 }
-                usersRef.child(userSnapshot['key'] + '/meeting_times').update({ [TomorrowDateString]: String(t_time_value) });
+                usersRef.child(userSnapshot['key'] + '/meeting_times').update({ [tomorrow_date_string]: String(t_time_value) });
                 alert("Ny møtetid for i morgen er registrert!")
             }
         });
     });
 }
 
-// Registrer fravær i morgen
+
 function register_absence() {
     let database = firebase.database();
     let usersRef = database.ref('Users');
-
-    // t_username_value = t_username.value;
-    t_username_value = localStorage.getItem("username");
-    // t_pin_value = t_pin.value;
-    t_pin_value = localStorage.getItem("pin");
-
-
-    let TomorrowDateString = get_date_tomorrow_string();
-    let TodaysDateString = get_date_string();
-    let melding;
+    let t_username_value = localStorage.getItem("username");
+    let t_pin_value = localStorage.getItem("pin");
+    let tomorrow_date_string = get_date_tomorrow_string();
+    let todays_date_string = get_date_string();
 
     if (confirm('Er du sikker på at du vil melde fravær i morgen?')) {
-
         usersRef.once('value', function (snapshot) {
             snapshot.forEach(function (userSnapshot) {
                 let user = userSnapshot.val();
                 if (user['name'] === t_username_value && user['pin'] == t_pin_value) {
 
-                    usersRef.child(userSnapshot['key'] + '/absence_dates').update({ [TomorrowDateString]: TodaysDateString });
+                    usersRef.child(userSnapshot['key'] + '/absence_dates').update({ [tomorrow_date_string]: todays_date_string });
                     alert("Fravær er registrert!")
                 }
             });
         });
     }
-
     document.getElementById('fravaar_button').style.backgroundColor = '#C52525';
 }
 
-// Register ny bruker
+
 function register_user() {
     let database = firebase.database();
     let usersRef = database.ref('Users');
     let mIDRef = usersRef.child('ID:' + m_ID.value);
 
-    r_username_value = username.value;
-    r_pin_value = pin.value;
-    m_ID_value = m_ID.value;
+    let r_username_value = username.value;
+    let r_pin_value = pin.value;
+    let m_ID_value = m_ID.value;
     let yesterday_date = get_date_yesterday_string();
 
     mIDRef.once('value', function (snapshot) {
@@ -138,14 +114,13 @@ function register_user() {
     });
 }
 
-// Oppdater tabell
-dbRefObject.on('value', function (snapshot) {
 
+// Oppdater tabell
+const db_ref_object = firebase.database().ref('Users')
+db_ref_object.on('value', function (snapshot) {
     reset_tab();
     tab_info = [];
-
     snapshot.forEach(function (userSnapshot) {
-        let key = userSnapshot['key'];
         let user = userSnapshot.val();
 
         let date_today = get_date_string();
@@ -248,13 +223,11 @@ dbRefObject.on('value', function (snapshot) {
     }
 });
 
+
 function reset_tab() {
     let table_row = document.getElementById("status");
-
     table_row.innerHTML = "";
-
     let header = table_row.createTHead();
-
     let row = header.insertRow(-1);
     let name_cell = row.insertCell(0);
     let prosecco_mark_cell = row.insertCell(1);
@@ -269,9 +242,9 @@ function reset_tab() {
     status_cell.innerHTML = "<th><b>Status</b></th>";
 }
 
+
 function get_date_string() {
     let currentDate = new Date();
-
     let year = currentDate.getFullYear();
     let month = currentDate.getMonth() + 1; // months are 0-indexed, so we add 1 to get the correct month
     let day = currentDate.getDate();
@@ -281,11 +254,10 @@ function get_date_string() {
     if (String(month).length == 1) {
         month = '0' + month;
     }
-
     let date_string = year + '-' + month + '-' + day;
-
     return date_string;
 }
+
 
 function get_date_tomorrow_string() {
     let currentDate = new Date();
@@ -306,6 +278,7 @@ function get_date_tomorrow_string() {
 
     return TomorrowDateString;
 }
+
 
 function get_date_yesterday_string() {
     let currentDate = new Date();
