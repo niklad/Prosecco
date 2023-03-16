@@ -96,20 +96,25 @@ function register_absence() {
 function register_user() {
     let database = firebase.database();
     let users_ref = database.ref('Users');
-    let m_ID_Ref = users_ref.child('ID:' + m_ID.value);
-
+    let m_ID_ref = users_ref.child('ID:' + m_ID.value);
     let r_username_value = username.value;
     let r_pin_value = pin.value;
     let m_ID_value = m_ID.value;
     let yesterday_date = get_date_yesterday_string();
 
-    m_ID_Ref.once('value', function (snapshot) {
+    m_ID_ref.once('value', function (snapshot) {
         if (snapshot.exists()) {
             alert("Your ID has already been registered!");
         } else {
             alert("Your ID has been registered!");
             let new_user_ref = users_ref.child('ID:' + m_ID_value);
-            new_user_ref.set({ 'name': r_username_value, 'pin': r_pin_value, 'prosecco_marks': 0, 'joker_prosecco': 0, 'standard_time': { [yesterday_date]: '09:15' } });
+            new_user_ref.set({
+                'name': r_username_value,
+                'pin': r_pin_value,
+                'prosecco_marks': 0,
+                'joker_prosecco': 0,
+                'standard_time': { [yesterday_date]: '09:15' }
+            });
         }
     });
 }
