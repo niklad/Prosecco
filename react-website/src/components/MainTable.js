@@ -1,45 +1,57 @@
-import { useEffect, useState } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import React, { useEffect, useState } from "react";
+import { database } from "./FirebaseConfig";
+import { onValue, ref } from "firebase/database";
+import GetTodaysDate from "./GetTodaysDate";
+import GetTomorrowsDate from "./GetTomorrowsDate";
+import GetUserStatus from "./GetUserStatus"
+import GetUserMeetingTime from "./GetUserMeetingTime"
 
-const MainTable = () => {
-    const [data, setData] = useState([]);
+import '../styles/MainTable.css';
+
+
+function MainTable() {
+    const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
-        const dbRef = firebase.database().ref('Users');
-        dbRef.on('value', (snapshot) => {
-            const users = snapshot.val();
-            const newData = Object.keys(users).map((key) => {
-                const user = users[key];
-                return {
-                    name: user.name,
-                    meetingTime: user.meeting_times['2023-03-17'],
-                };
+        const usersRef = ref(database, "Users");
+        onValue(usersRef, (snapshot) => {
+            const data = [];
+            snapshot.forEach((childSnapshot) => {
+                const childData = childSnapshot.val();
+                data.push(childData);
             });
-            setData(newData);
+            data.sort((a, b) => b.prosecco_marks - a.prosecco_marks); // Sort by "Antall streker"
+            setTableData(data);
         });
-
-        return () => {
-            dbRef.off();
-        };
     }, []);
+
+    const dateToday = GetTodaysDate();
+    const dateTomorrow = GetTomorrowsDate();
 
     return (
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Meeting Time</th>
+                    <th>Navn</th>
+                    <th>Antall streker</th>
+                    <th>Dagens møtetid</th>
+                    <th>Morgendagens møtetid</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                {data.map((user) => (
+                {tableData.map((user) => (
                     <tr key={user.name}>
                         <td>{user.name}</td>
-                        <td>{user.meetingTime}</td>
+                        <td>{user.prosecco_marks}</td>
+                        <td>{GetUserMeetingTime(user, dateToday)}</td>
+                        <td>{GetUserMeetingTime(user, dateTomorrow)}</td>
+                        <td>{GetUserStatus(user, dateToday)}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
     );
-};
+}
+
+export default MainTable;
