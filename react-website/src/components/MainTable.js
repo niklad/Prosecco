@@ -1,45 +1,48 @@
-import { useEffect, useState } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import React, { useEffect, useState } from "react";
+import { database } from "./FirebaseConfig";
+import { onValue, ref } from "firebase/database";
+import GetTodaysDate from "./GetTodaysDate";
 
-const MainTable = () => {
-    const [data, setData] = useState([]);
+function MainTable() {
+  const [tableData, setTableData] = useState([]);
 
-    useEffect(() => {
-        const dbRef = firebase.database().ref('Users');
-        dbRef.on('value', (snapshot) => {
-            const users = snapshot.val();
-            const newData = Object.keys(users).map((key) => {
-                const user = users[key];
-                return {
-                    name: user.name,
-                    meetingTime: user.meeting_times['2023-03-17'],
-                };
-            });
-            setData(newData);
-        });
+  useEffect(() => {
+    const usersRef = ref(database, "Users");
 
-        return () => {
-            dbRef.off();
-        };
-    }, []);
+    onValue(usersRef, (snapshot) => {
+      const data = [];
 
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Meeting Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((user) => (
-                    <tr key={user.name}>
-                        <td>{user.name}</td>
-                        <td>{user.meetingTime}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-};
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        data.push(childData);
+      });
+
+      setTableData(data);
+    });
+  }, []);
+
+  const today = GetTodaysDate();
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Antalll proseccosetreker</th>
+          <th>Dagens møtetid</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tableData.map((user) => (
+          <tr key={user.name}>
+            <td>{user.name}</td>
+            <td>{user.prosecco_marks}</td>
+            <td>{user.meeting_times[today]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+export default MainTable;
