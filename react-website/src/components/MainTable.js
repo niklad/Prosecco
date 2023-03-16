@@ -5,6 +5,8 @@ import GetTodaysDate from "./GetTodaysDate";
 import GetTomorrowsDate from "./GetTomorrowsDate";
 import GetUserStatus from "./GetUserStatus"
 
+import '../styles/MainTable.css';
+
 
 function MainTable() {
     const [tableData, setTableData] = useState([]);
