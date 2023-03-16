@@ -198,7 +198,7 @@ db_ref_object.on('value', function (snapshot) {
     });
 
     tab_info.sort(function (a, b) {
-        return a.prosecco_marks - b.prosecco_marks
+        return ((a.prosecco_marks + a.joker_prosecco) - (b.prosecco_marks + b.joker_prosecco))
     })
     tab_info.reverse();
 
