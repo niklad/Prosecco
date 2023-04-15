@@ -25,6 +25,11 @@
 .u-section-1 .u-text-1 {
   font-weight: 700;
   margin: 82px auto 0;
+  color: white;
+}
+
+.subheader {
+  color: white;
 }
 
 .u-section-1 .u-form-1 {
