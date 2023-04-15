@@ -35,7 +35,7 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: rgb(203, 207, 209);
+    background-color: rgb(255, 255, 255, 0.7);
 }
 
 td {
@@ -48,9 +48,6 @@ td {
 }
 
 .joker_prosecco_table {
-    /* margin-left: 15%;
-  margin-right: 15%;
-  margin-top: 5%; */
     width: 45%;
     float: left;
     margin-right: 5%;
