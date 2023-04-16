@@ -1,22 +1,24 @@
 .u-section-1 .u-sheet-1 {
     min-height: 400px;
-  }
-
-.hoved_tekst{
-  padding-top: 20px; 
-  padding-right: 300px; 
-  padding-bottom: 20px; 
-  padding-left: 320px
 }
 
-.letter_bullets{
-  list-style-type: lower-alpha;
+.hoved_tekst {
+    padding-top: 20px;
+    padding-right: 300px;
+    padding-bottom: 20px;
+    padding-left: 320px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.letter_bullets {
+    list-style-type: lower-alpha;
 }
 
 @media (max-width: 1199px) {
-  .hoved_tekst{
-    padding-top: 5%; 
-    padding-right: 5%;  
-    padding-left: 5%;
-  }
+    .hoved_tekst {
+        padding-top: 5%;
+        padding-right: 5%;
+        padding-left: 5%;
+    }
 }

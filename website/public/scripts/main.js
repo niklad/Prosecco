@@ -181,7 +181,7 @@ db_ref_object.on('value', function (snapshot) {
         // Update status to include "kom for sent" if user was late
         if (presence_status_before_time == 'Kom på sal kl. ' || presence_status == 'Har dratt hjem') {
             if (user['arrival_times'][date_today] > (todays_meeting_time + ':59')) {
-                presence_status = '<span style="color: #FF0000; font-weight: bold;">' + presence_status + '</span>';
+                presence_status = '<span style="color: #000000; font-weight: bold;">' + presence_status + '</span>';
             }
         }
 
@@ -323,3 +323,16 @@ function get_standard_time(user, date) {
 
     return standard_time;
 }
+
+
+function updateClock() {
+    let now = new Date();
+    let hours = now.getHours().toString().padStart(2, '0') + ' : ';
+    let minutes = now.getMinutes().toString().padStart(2, '0') + ' : ';
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+}
+
+setInterval(updateClock, 1000);
