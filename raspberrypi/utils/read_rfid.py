@@ -12,6 +12,10 @@ def read_rfid(database: pyrebase):
     id = input("Enter ID: ")
     print()
 
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_date = now.strftime("%Y-%m-%d")
+
     # Check if ID is ten numbers
     if len(id) != 10 or not id.isdigit():
         print("ID must be ten digits.")
@@ -26,10 +30,6 @@ def read_rfid(database: pyrebase):
         return None, None, None
 
     turn_off_LEDs()
-
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    current_date = now.strftime("%Y-%m-%d")
 
     # Get arrival and departure times
     arrival_time = database.child(
