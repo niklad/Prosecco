@@ -1,15 +1,15 @@
 .link {
-  background-color: rgb(197, 37, 37);
+  background-color: #a35559;
   /* display: flex; */
 }
 
 .link:hover {
-  background-color: rgb(179, 46, 46);
+  background-color: #a35559;
   /* display: flex; */
 }
 
 .link:focus {
-  background-color: rgb(197, 37, 37);
+  background-color: #a35559;
   /* display: flex; */
 }
 
