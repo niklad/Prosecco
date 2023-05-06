@@ -48279,9 +48279,9 @@ blockquote {
 /** alt-color-rules **/
 
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.1),  rgba(255, 255, 255, 0.0)),
-    url("images/Prosecco_background3.webp");
-    /* background-image: url("images/Prosecco_background3.webp"); */
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.0)),
+        url("images/Prosecco_background3.webp");
+    /* url("images/bday_bg.jpg"); */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;

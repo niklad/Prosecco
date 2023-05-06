@@ -226,7 +226,33 @@ db_ref_object.on('value', function (snapshot) {
             prosecco_mark_cell.appendChild(goblin_image);
         }
     }
+
+    let BIRTHDAY_KID = ''; // Set to name of birthday kid
+    addBirthdayToName(BIRTHDAY_KID);
+
 });
+
+
+function giveKatinkaOneConfetti() {
+}
+
+
+function addBirthdayToName(BIRTHDAY_KID) {
+    let table = document.getElementById("status");
+    // This is probably a dumb way to do it, but it works
+    for (let i = 0; i < table.rows.length; i++) {
+        let row = table.rows[i];
+        let name_cell = row.cells[0];
+        if (name_cell.innerHTML == BIRTHDAY_KID) {
+            name_cell.innerHTML = "<img src='./images/kek2.png' width='20' height='20' style='margin-right: 5px;'>" + name_cell.innerHTML + "<img src='./images/kek2.png' width='20' height='20' style='margin-left: 5px;'>";
+            name_cell.innerHTML = "<img src='./images/confetti.png' width='20' height='20' style='margin-right: 5px;'>" + name_cell.innerHTML + "<img src='./images/confetti.png' width='20' height='20' style='margin-left: 5px;'>";
+        }
+        // Else if name_cell.innerHTML == "Katinka", add confetti.png after name
+        else if (name_cell.innerHTML == "Katinka") {
+            name_cell.innerHTML = name_cell.innerHTML + "<img src='./images/confetti.png' width='20' height='20' style='margin-left: 5px;'>";
+        }
+    }
+}
 
 
 function reset_tab() {
