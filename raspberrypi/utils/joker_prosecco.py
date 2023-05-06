@@ -48,7 +48,7 @@ def give_random_processo(database: pyrebase, id: str):
         database.child("Users").child(
             the_chosen_one_id).child("name").get().val()
     )
-    joker_proseco = random.randint(0, 9) == 0
+    joker_proseco = random.randint(0, 99) < 7
     if joker_proseco:
         increment_joker_prosecco(
             the_chosen_one_id, database, JOKER_PROSECCO_PENALTY)
