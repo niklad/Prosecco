@@ -20,6 +20,8 @@ let t_time = document.querySelector("#mt_button");
 // Id-variabler til registrering av ny standardtid
 let st_time = document.querySelector("#st_button");
 
+var audio = new Audio('soundFiles/jokerprosecco.m4a');
+
 
 function register_standard_time() {
     let database = firebase.database();
@@ -120,8 +122,42 @@ function register_user() {
 }
 
 
-// Oppdater tabell
 const db_ref_object = firebase.database().ref('Users')
+var prevJokerProsecco = {}; // initialize object to store previous key values
+db_ref_object.once('value', (snapshot) => {
+    const users = snapshot.val();
+    const userKeys = Object.keys(users);
+    for (const userKey of userKeys) {
+        const userData = users[userKey];
+        const variableKeys = Object.keys(userData);
+        console.log(`User: ${userKey}, Variables: ${variableKeys.join(', ')}`);
+
+        prevJokerProsecco[userKey] = userData['joker_prosecco']
+        // do something with the variables here
+    }
+    console.log(prevJokerProsecco);
+});
+
+
+
+// Sjekk etter jokerprosecco
+db_ref_object.on("child_changed", function(snapshot) {
+
+    key = 'joker_prosecco';
+    var userID = snapshot.key;
+    var userObj = snapshot.val();
+    var keyVal = userObj[key];
+  
+    console.log("User " + userID + "'s " + key + " was updated to " + keyVal);
+
+    if (keyVal !== prevJokerProsecco[userID]) { // check if key value has changed for this user
+        audio.play();
+        console.log(userID)
+        prevJokerProsecco[userID] = keyVal; // update previous key value for this user
+    }
+  });
+
+// Oppdater tabell
 db_ref_object.on('value', function (snapshot) {
     reset_tab();
     tab_info = [];
