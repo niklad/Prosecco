@@ -23,7 +23,7 @@ from utils.gpio import blink_rainbow_LEDs
 
 def increment_joker_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
-    blink_rainbow_LEDs(JOKER_COLOR, 3, 0.1)
+    blink_rainbow_LEDs(JOKER_COLOR, 3, 0.01)
     joker_prosecco_marks = database.child("Users").child(
         id).child("joker_prosecco").get().val()
     joker_prosecco_marks += penalty_points
