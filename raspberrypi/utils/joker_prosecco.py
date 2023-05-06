@@ -10,20 +10,20 @@ from utils.constants import (
     RED,
     GREEN,
     BLUE,
-    YELLOW,
+    JOKER_COLOR,
     ON_TIME_NUMBER_OF_BLINKS,
     LATE_NUMBER_OF_BLINKS,
     VERY_LATE_NUMBER_OF_BLINKS,
     SAFING_NUMBER_OF_BLINKS,
     BLINK_DELAY,
 )
-from utils.gpio import blink_LEDs
+from utils.gpio import blink_rainbow_LEDs
 
 
 
 def increment_joker_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
-    blink_LEDs(YELLOW, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
+    blink_rainbow_LEDs(JOKER_COLOR, 3, 0.1)
     joker_prosecco_marks = database.child("Users").child(
         id).child("joker_prosecco").get().val()
     joker_prosecco_marks += penalty_points
