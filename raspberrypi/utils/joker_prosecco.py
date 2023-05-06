@@ -1,10 +1,29 @@
 import pyrebase
 import random
 from utils.constants import JOKER_PROSECCO_PENALTY
+from utils.constants import (
+    LATE_PENALTY,
+    VERY_LATE_PENALTY,
+    VERY_LATE_LIMIT_HOURS,
+    SAFING_LIMIT_MINUTES,
+    MEETING_TIME_SECONDS,
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    ON_TIME_NUMBER_OF_BLINKS,
+    LATE_NUMBER_OF_BLINKS,
+    VERY_LATE_NUMBER_OF_BLINKS,
+    SAFING_NUMBER_OF_BLINKS,
+    BLINK_DELAY,
+)
+from utils.gpio import blink_LEDs
+
 
 
 def increment_joker_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
+    blink_LEDs(YELLOW, SAFING_NUMBER_OF_BLINKS, BLINK_DELAY)
     joker_prosecco_marks = database.child("Users").child(
         id).child("joker_prosecco").get().val()
     joker_prosecco_marks += penalty_points
