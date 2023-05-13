@@ -8,7 +8,6 @@ import os
 
 
 def main():
-    configure_GPIO_pins()
     database = firebase_setup()
 
     while True:
