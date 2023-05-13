@@ -8,7 +8,6 @@ from utils.constants import (
     MEETING_TIME_SECONDS,
     RED,
     GREEN,
-    BLUE,
     ON_TIME_NUMBER_OF_BLINKS,
     LATE_NUMBER_OF_BLINKS,
     VERY_LATE_NUMBER_OF_BLINKS,
@@ -63,12 +62,12 @@ def get_meeting_time(id: str, database: pyrebase):
     )
     if meeting_time is None:
         # Get the standard times from the standard_time node in the database
-        standard_times = database.child("Users").child(
-            id).child("standard_time").get().val()
+        standard_times = (
+            database.child("Users").child(id).child("standard_time").get().val()
+        )
         # If the last standard time in the standard_times dictionary was set today, use the second to last one
         if (
-            datetime.strptime(list(standard_times.keys())
-                              [-1], "%Y-%m-%d").date()
+            datetime.strptime(list(standard_times.keys())[-1], "%Y-%m-%d").date()
             == today.date()
         ):
             meeting_time = list(standard_times.values())[-2]
@@ -115,8 +114,9 @@ def day_is_weekend():
 
 def increment_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
-    prosecco_marks = database.child("Users").child(
-        id).child("prosecco_marks").get().val()
+    prosecco_marks = (
+        database.child("Users").child(id).child("prosecco_marks").get().val()
+    )
     prosecco_marks += penalty_points
     database.child("Users").child(id).child("prosecco_marks").set(prosecco_marks)
     return
