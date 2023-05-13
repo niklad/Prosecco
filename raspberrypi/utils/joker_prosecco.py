@@ -2,20 +2,7 @@ import pyrebase
 import random
 from utils.constants import JOKER_PROSECCO_PENALTY
 from utils.constants import (
-    LATE_PENALTY,
-    VERY_LATE_PENALTY,
-    VERY_LATE_LIMIT_HOURS,
-    SAFING_LIMIT_MINUTES,
-    MEETING_TIME_SECONDS,
-    RED,
-    GREEN,
-    BLUE,
     JOKER_COLOR,
-    ON_TIME_NUMBER_OF_BLINKS,
-    LATE_NUMBER_OF_BLINKS,
-    VERY_LATE_NUMBER_OF_BLINKS,
-    SAFING_NUMBER_OF_BLINKS,
-    BLINK_DELAY,
 )
 from utils.gpio import blink_rainbow_LEDs
 

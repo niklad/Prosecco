@@ -1,11 +1,11 @@
 """Functions for controlling the GPIO pins on the Raspberry Pi."""
-import RPi.GPIO as GPIO
+import colorsys
 import time
-from utils.constants import NUMBER_OF_LEDS
+
 import board
 import neopixel
 
-import colorsys
+from utils.constants import NUMBER_OF_LEDS
 
 
 def configure_GPIO_pins():
