@@ -4,6 +4,7 @@ from utils.check_time import check_time, day_is_weekend
 from utils.joker_prosecco import give_random_processo
 from utils.gpio import blink_LEDs, configure_GPIO_pins, turn_on_LEDs, turn_off_LEDs
 from utils.constants import BLINK_DELAY, ON_TIME_NUMBER_OF_BLINKS, BLUE, RED, GREEN
+import os
 
 
 def main():
@@ -34,6 +35,7 @@ def main():
             print("\nBing bong")
             turn_off_LEDs()
             turn_on_LEDs(RED)
+            os.system("sudo reboot")
             break
         except Exception as e:
             print("Program not running. Please reboot or contact an adult.")
