@@ -35,13 +35,14 @@ def main():
             print("\nBing bong")
             turn_off_LEDs()
             turn_on_LEDs(RED)
-            os.system("sudo reboot")
             break
         except Exception as e:
             print("Program not running. Please reboot or contact an adult.")
             print(f"Error: {e}")
             turn_off_LEDs()
             turn_on_LEDs(RED)
+            # Reboot if something goes wrong
+            os.system("sudo reboot")
             break
 
 
