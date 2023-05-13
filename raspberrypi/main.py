@@ -2,7 +2,7 @@ from utils.firebase_setup import firebase_setup
 from utils.read_rfid import read_rfid
 from utils.check_time import check_time, day_is_weekend
 from utils.joker_prosecco import give_random_processo
-from utils.gpio import blink_LEDs, configure_GPIO_pins, turn_on_LEDs, turn_off_LEDs
+from utils.gpio import blink_LEDs, turn_on_LEDs, turn_off_LEDs
 from utils.constants import BLINK_DELAY, ON_TIME_NUMBER_OF_BLINKS, BLUE, RED, GREEN
 import os
 
