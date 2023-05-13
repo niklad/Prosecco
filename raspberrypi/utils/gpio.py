@@ -8,13 +8,6 @@ import neopixel
 from utils.constants import NUMBER_OF_LEDS
 
 
-def configure_GPIO_pins():
-    """Configure the GPIO pins."""
-    # GPIO.setmode(GPIO.BCM)
-    # GPIO.setup(18, GPIO.OUT)
-    pass
-
-
 def turn_on_LEDs(color: tuple):
     pixels = neopixel.NeoPixel(board.D18, NUMBER_OF_LEDS)
     pixels.fill(color)
