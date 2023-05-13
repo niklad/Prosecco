@@ -20,15 +20,14 @@ from utils.constants import (
 from utils.gpio import blink_rainbow_LEDs
 
 
-
 def increment_joker_prosecco(id: str, database: pyrebase, penalty_points: int = 1):
     # Increment the prosecco_mark variable in the database
     blink_rainbow_LEDs(JOKER_COLOR, 3, 0.01)
-    joker_prosecco_marks = database.child("Users").child(
-        id).child("joker_prosecco").get().val()
+    joker_prosecco_marks = (
+        database.child("Users").child(id).child("joker_prosecco").get().val()
+    )
     joker_prosecco_marks += penalty_points
-    database.child("Users").child(id).child(
-        "joker_prosecco").set(joker_prosecco_marks)
+    database.child("Users").child(id).child("joker_prosecco").set(joker_prosecco_marks)
     return
 
 
@@ -45,13 +44,11 @@ def give_random_processo(database: pyrebase, id: str):
     the_chosen_number = random.randint(0, number_of_participants - 1)
     the_chosen_one_id = id_list[the_chosen_number]
     the_chosen_one_name = (
-        database.child("Users").child(
-            the_chosen_one_id).child("name").get().val()
+        database.child("Users").child(the_chosen_one_id).child("name").get().val()
     )
     joker_proseco = random.randint(0, 99) < 7
     if joker_proseco:
-        increment_joker_prosecco(
-            the_chosen_one_id, database, JOKER_PROSECCO_PENALTY)
+        increment_joker_prosecco(the_chosen_one_id, database, JOKER_PROSECCO_PENALTY)
         print(f"{the_chosen_one_name} got a Joker Prosecco!!!")
 
 
